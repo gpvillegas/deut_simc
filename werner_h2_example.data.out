@@ -1,0 +1,27 @@
+  
+ ************************************************
+ *                                              *
+ *                --- SIMC ---                  *
+ *                                              *
+ *          Welcome to Jefferson Lab            *
+ *         Last edited on: 10/26/2016           *
+ *                                              *
+ ************************************************
+ Enter the input filename
+ (assumed to be in infiles directory):
+ *************************************************
+ filename=infiles/current.data                                                 
+ filename=infiles/extra_hydrogen_norad.data                                    
+ E_bind =   2.2249399999998332      MeV in limits_init (QF only)
+  ****--------  D(e,e'p)  --------****
+    SHMS is detecting electrons (SSA TUNE)
+    HRSR is detecting hadrons
+ Grumpy Dutch Giant welcomes you to Hall C++ at JLab12 - Get to work!
+ NOTE: Will NOT be applying radiative corrections
+ NOTE: Will NOT be calculating energy loss in the target
+ NOTE: Will NOT be calculating Coulomb correction (default for Hydrogen target)
+ NOTE: Will NOT correct reconstructed data for energy loss
+ 
+  *************************************************
+  
+ Generating Event         1 ...         0  successes so far - Monitor: 0.0000E+00
