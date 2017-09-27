@@ -854,8 +854,9 @@ c	exponentiate = use_expon
 
 	real*8 Pm_values(ntheorymax), absorption
 	integer m,n,iok, do_fsi, interpol
+	logical save_grid, use_binary_file
 	logical success
-
+	
 ! ... open the file
 	if ( nint(targ%A) .eq. 2) then
 	   ! various deuteron models, here for laget model
@@ -950,9 +951,14 @@ c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
 				! initialize LAGET model
 	   do_fsi =  theory_par%parameter(1) !! 0 = PWIA, 1 = FSI
 	   interpol =  theory_par%parameter(2) !! 1 linear, 2 = log
-           call init_laget( theory_par%data_file, do_fsi, interpol )
+	   use_binary_file = (int(theory_par%parameter(3)) .eq. 1) !! 1 = use binary file
+	   save_grid =  .False.
+!           call init_laget( theory_par%data_file, do_fsi, interpol )
+	   call init_laget( theory_par%data_file, do_fsi, interpol,
+     >                      save_grid, use_binary_file)
 	endif
 	      
+	
 
 ! ... we made it
 	success=.true.

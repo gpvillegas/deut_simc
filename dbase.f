@@ -71,7 +71,7 @@
 	write(6,*) '*                --- SIMC ---                  *'
 	write(6,*) '*                                              *'
 	write(6,*) '*          Welcome to Jefferson Lab            *'
-	write(6,*) '*         Last edited on: 10/26/2016           *'
+	write(6,*) '*         Last edited on: 9/27/2017           *'
 	write(6,*) '*                                              *'
 	write(6,*) '************************************************'
 	write(6,*) 'Enter the input filename'

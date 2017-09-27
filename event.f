@@ -1568,10 +1568,15 @@ C If using Coulomb corrections, include focusing factor
 	  write(6,*)'Ein =',vertex%Ein
 	  write(6,*)'hadron mom =',vertex%p%P
 	  write(6,*)'e mom =',vertex%e%P
+	  write(6,*)'Pmiss =',recon%Pm	  
+	  write(6,*)'Pmiss_v =',vertex%Pm	  
 	  write(6,*)'mass =',Mh
-	  write(6,*)'epsilon =',main%epsilon
-	  write(6,*)'phi_pq =',main%phi_pq
-	  write(6,*)'theta_pq =',main%theta_pq
+	  write(6,*)'epsilon =',recon%epsilon
+	  write(6,*)'phi_pq =',recon%phi_pq
+	  write(6,*)'theta_pq =',recon%theta_pq
+	  write(6,*)'epsilon_v =',main%epsilon
+	  write(6,*)'phi_pq_v =',main%phi_pq
+	  write(6,*)'theta_pq_v =',main%theta_pq
 	  write(6,*)'======================================'
 	endif
 
@@ -1607,6 +1612,16 @@ C If using Coulomb corrections, include focusing factor
      >        tgtweight
 
 	success = .true.
+
+	if (debug(3)) then
+	  write(6,*)'======================================'
+	  write(6,*)'complete_main: cross section'
+	  write(6,*)'SF = ', main%SF_weight
+	  write(6,*)'Jacobian = ', main%jacobian
+	  write(6,*)'Sig_CC =  ', main%sigcc
+	  write(6,*)'Sig = ', main%sig
+	  write(6,*)'======================================'
+	endif
 
 	if (debug(2)) write(6,*)'comp_main: ending, success =',success
 	return
