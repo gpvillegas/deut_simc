@@ -35,7 +35,6 @@
 	type(histograms)::	H
 	type(event_central)::	central
 	type(sums_twoarm)::	sumerr, sumerr2, aveerr, resol
-
 	real*8 one
 	parameter (one=1.0d0)	!double precision 1 for subroutine calls
 
@@ -896,9 +895,9 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
      >          'doing_deutrho', doing_deutrho, 'doing_herho', doing_herho
 	write(iun,'(5x,(2x,a19,''='',l2),2(2x,a19,''='',i2))') 'mc_smear',
      >		mc_smear,'electron_arm',electron_arm,'hadron_arm',hadron_arm
-	write(iun,'(5x,3(2x,a19,''='',l2)))') 'using_Eloss', using_Eloss,
+	write(iun,'(5x,3(2x,a19,''='',l2))') 'using_Eloss', using_Eloss,
      >		'using_Coulomb',using_Coulomb,'deForest_flag',deForest_flag
-	write(iun,'(5x,3(2x,a19,''='',l2)))') 'correct_Eloss', correct_Eloss,
+	write(iun,'(5x,3(2x,a19,''='',l2))') 'correct_Eloss', correct_Eloss,
      >		'correct_raster',correct_raster, 'doing_decay', doing_decay
 	write(iun,'(5x,2(2x,a19,''='',l2))')
      >		'using_E_arm_montecarlo', using_E_arm_montecarlo,

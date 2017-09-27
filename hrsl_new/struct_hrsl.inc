@@ -23,6 +23,9 @@
 
 	integer*4 lSTOP_trials
 	integer*4 lSTOP_col_entr,lSTOP_col_exit
+! compatibility to original hrs
+	integer*4 lSTOP_slit_hor,lSTOP_slit_vert
+
 	integer*4 lSTOP_spec_entr
 	integer*4 lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out
 	integer*4 lSTOP_Q2_in,lSTOP_Q2_mid,lSTOP_Q2_out
@@ -33,6 +36,7 @@
 	integer*4 lSTOP_prl1,lSTOP_prl2,lSTOP_successes
 	
 	common/spectrometer4/ lSTOP_trials,
+     >		 lSTOP_slit_hor,lSTOP_slit_vert,	
      >	         lSTOP_col_entr,lSTOP_col_exit,
      >		 lSTOP_spec_entr,
      >		 lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out,

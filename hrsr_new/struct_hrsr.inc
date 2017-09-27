@@ -23,8 +23,8 @@
 
 	integer*4 rSTOP_trials
 	integer*4 rSTOP_col_entr,rSTOP_col_exit
+	integer*4 rSTOP_slit_hor,rSTOP_slit_vert	
         integer*4 rSTOP_spec_entr
-	integer*4 rSTOP_slit_hor,rSTOP_slit_vert
 	integer*4 rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out
 	integer*4 rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out
 	integer*4 rSTOP_Q3_in,rSTOP_Q3_mid,rSTOP_Q3_out
@@ -35,6 +35,7 @@
 
 	common/spectrometer3/ rSTOP_trials,
      >		 rSTOP_col_entr,rSTOP_col_exit,
+     >		 rSTOP_slit_hor,rSTOP_slit_vert,     
      >		 rSTOP_spec_entr,
      >		 rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out,
      >		 rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out,
