@@ -155,6 +155,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 ! ... get slop values for the difference between orig and recon
 ! ... SPECTROMETER quantities (recon inaccuracies due to the montecarlos)
 
+	
 	if (using_E_arm_montecarlo) then
 	  if (electron_arm.eq.1) then
 	    slop%MC%e%delta%used = slop_param_d_HMS

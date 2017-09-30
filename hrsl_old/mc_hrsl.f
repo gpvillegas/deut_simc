@@ -1,6 +1,7 @@
 	subroutine mc_hrsl (p_spec, th_spec, dpp, x, y, z, dxdz, dydz,
      >		x_fp, dx_fp, y_fp, dy_fp, m2,
-     >		ms_flag, wcs_flag, decay_flag, resmult, fry, ok_spec, pathlen)
+     >		ms_flag, wcs_flag, decay_flag, resmult, fry, ok_spec, pathlen,
+     >          collimator)
 
 C+______________________________________________________________________________
 !
@@ -27,7 +28,7 @@ C-______________________________________________________________________________
 
 C Spectrometer definitions - for double arm monte carlo compatability
 
-	integer*4 spectr
+	integer*4 spectr, collimator
 	parameter (spectr = 4)	!hrs-left is spec #4.
 
 C Collimator (rectangle) dimensions and offsets.
@@ -45,18 +46,7 @@ C Collimator (rectangle) dimensions and offsets.
 ! peak at x<=1) will not be preserved.
 
 	logical use_sieve /.false./		!use a fake sieve slit.
-
-! No collimator - wide open
-!	parameter (h_entr = 99.)
-!	parameter (v_entr = 99.)
-!	parameter (h_exit = 99.)
-!	parameter (v_exit = 99.)
-
-! Large collimator: (hallaweb.jlab.org/news/minutes/collimator-distance.html)
-	parameter (h_entr = 3.145)
-	parameter (v_entr = 6.090)
-	parameter (h_exit = 3.335)	!0.1mm narrower than 'hadron arm'.
-	parameter (v_exit = 6.485)
+	logical use_open /.false./
 
 	parameter (y_off  = 0.0)
 	parameter (x_off  = 0.0)
@@ -116,7 +106,43 @@ C ================================ Executable Code =============================
 	lSTOP_trials = lSTOP_trials + 1
 	xt = th_spec    !avoid 'unused variable' error for th_spec
 
-! Force particles to go through the sieve slit holes, for mock sieve option.
+C Read in transport coefficients.
+
+	if (first_time_here) then
+	  call transp_init(spectr,n_classes)
+	  close (unit=chan)
+	  if (n_classes.ne.12) stop 'MC_HRSL, wrong number of transport classes'
+	  first_time_here = .false.
+
+	  if(collimator .eq. 0) then
+	     use_open = .true.
+	  endif
+           
+	  if(collimator .eq. 1) then
+	     use_open = .false.
+	  endif
+	  
+	  if(collimator .eq. 2) then
+	     use_sieve = .true.
+	  endif
+	  
+	  if (use_open .or. use_sieve) then
+!       No collimator - wide open
+	     h_entr = 99.
+	     v_entr = 99.
+	     h_exit = 99.
+	     v_exit = 99.
+	  else
+!       Large collimator: (hallaweb.jlab.org/news/minutes/collimator-distance.html)
+	     h_entr = 3.145
+	     v_entr = 6.090
+	     h_exit = 3.335	!0.1mm narrower than 'hadron arm'.
+	     v_exit = 6.485
+	  endif
+	  
+	endif
+	
+!Force particles to go through the sieve slit holes, for mock sieve option.
 ! Use z_exit, since sieve slit is ~8cm behind normal collimator.
 
 	if (use_sieve) then
@@ -143,14 +169,6 @@ C ================================ Executable Code =============================
 	dpps = dpp
 	p = p_spec*(1.+dpps/100.)
 
-C Read in transport coefficients.
-
-	if (first_time_here) then
-	  call transp_init(spectr,n_classes)
-	  close (unit=chan)
-	  if (n_classes.ne.12) stop 'MC_HRSL, wrong number of transport classes'
-	  first_time_here = .false.
-	endif
 
 ! Begin transporting particle.
 ! Do transformations, checking against apertures.
