@@ -16,8 +16,8 @@
 	include 'hbook.inc'
 	include 'sos/struct_sos.inc'
 	include 'hms/struct_hms.inc'
-	include 'hrsr/struct_hrsr.inc'
-	include 'hrsl/struct_hrsl.inc'
+	include 'hrsr_new/struct_hrsr.inc'
+	include 'hrsl_new/struct_hrsl.inc'
 	include 'shms/struct_shms.inc'
 	include 'calo/struct_calo.inc'
 
