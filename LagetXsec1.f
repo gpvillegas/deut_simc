@@ -95,6 +95,9 @@ c
       logical save_grid, use_binary
       common/fc__control_c/ save_grid, use_binary
 
+      integer ioutside_count
+      common /int_control/ioutside_count
+
       common/fc__datdir_c/ dat_dir
       common/fc__datdir_i/ n_dat_dir
 
@@ -139,6 +142,9 @@ c
       parameter (no_mec = 0)
       parameter (mec = 1)
 
+*     outside error counter
+      ioutside_count = 0
+      
 *---- particle masses and relevant combinations                             
 
       xmd = xm_d
@@ -341,6 +347,9 @@ c  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 c      common/fc__grid_par / nq2,nom,nta
       common/fc__laget_cnt/ laget_ps_fail,laget_grid_fail
       common/fc__laget_mod/ laget_intp,laget_pwia,laget_fsi,laget_mec
+
+      integer ioutside_count
+      common /int_control/ioutside_count
      
       data  xm_e / 510.99890d-03 /,  xm_p / 938.27200d+00 /, 
      +      xm_n / 939.56533d+00 /,  xm_d / 187.56128d+01 /
@@ -458,8 +467,10 @@ c      common/fc__grid_par / nq2,nom,nta
       endif
 *-    safety check to protect against overflow (nan)      
       if((sigl.eq.0.d+00).and.(sigt.eq.0.d+00).and.(siglt.eq.0.d+00)
-     +                   .and.(sigtt.eq.0.d+00)) then
-         write (6,*) 'all is zero, interpolation problem !'
+     +     .and.(sigtt.eq.0.d+00)) then
+         if (ioutside_count .le. 100) then
+            write (6,*) 'all is zero, interpolation problem !'
+         endif
          go to 1
       endif
 
@@ -779,7 +790,12 @@ c  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
       real*8 s_111,s_121,s_112,s_122,s_211,s_221,s_212,s_222
       real*8 ax,ay,az,axy,axz,ayz,axyz
       
+      integer ioutside_count
+      common /int_control/ioutside_count
+      
       common/fc__grid_deu / q2_step,om_step,ta_step
+
+
 c      common/fc__grid_par / nq2,nom,nta
       
       ff__intrpol = 0.d+00
@@ -801,7 +817,10 @@ c      common/fc__grid_par / nq2,nom,nta
       if(iz1.eq.nta) iz2 = iz1
       
       if( (ix1.lt.1).or.(ix2.gt.nq2).or.(iy1.lt.1).or.(iy2.gt.nom) )then
-         write(6,*) ' cross section grid out of range '
+         if (ioutside_count .le. 100) then
+            ioutside_count = ioutside_count + 1
+            write(6,*) ioutside_count, ' cross section grid out of range : q2, qomega', x, y
+         endif
          ff__intrpol = 0.d0
          return
       endif
@@ -897,6 +916,9 @@ c  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
         
       common/fc__grid_deu / q2_step,om_step,ta_step
 c      common/fc__grid_par / nq2,nom,nta
+
+      integer ioutside_count
+      common /int_control/ioutside_count
        
       ff__intrlog = 0.d+00
        
@@ -917,7 +939,9 @@ c      common/fc__grid_par / nq2,nom,nta
       if(iz1.eq.nta) iz2 = iz1
        
       if( (ix1.lt.1).or.(ix2.gt.nq2).or.(iy1.lt.1).or.(iy2.gt.nom) )then
-         write(6,*) ' cross section grid out of range '
+         if (ioutside_count .le.100) then
+            write(6,*) ' cross section grid out of range '
+         endif
          ff__intrlog = 0.d0
          return
       endif
