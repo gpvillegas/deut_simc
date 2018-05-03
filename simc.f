@@ -883,8 +883,8 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
      >		'doing_phsp', doing_phsp
 	write(iun,'(5x,2(2x,a19,''='',i2))') 'which_pion', which_pion,
      >		'which_kaon', which_kaon
-	write(iun,'(5x,3(2x,a19,''='',l2))') 'doing_hyd_elast', doing_hyd_elast,
-     >		'doing_deuterium', doing_deuterium, 'doing_heavy', doing_heavy
+	write(iun,'(5x,4(2x,a19,''='',l2))') 'doing_hyd_elast', doing_hyd_elast,
+     >		'doing_deuterium', doing_deuterium,'doing_bound', doing_bound, 'doing_heavy', doing_heavy
 	write(iun,'(5x,3(2x,a19,''='',l2))') 'doing_hydpi', doing_hydpi,
      >          'doing_deutpi', doing_deutpi, 'doing_hepi', doing_hepi
 	write(iun,'(5x,3(2x,a19,''='',l2))') 'doing_hydkaon', doing_hydkaon,
