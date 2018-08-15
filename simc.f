@@ -1410,7 +1410,16 @@ c	enddo
 	  endif
 	  delta_P_arm = main%SP%p%delta
 
+          if (hadron_arm .eq. 1 .or.hadron_arm .eq. 5 .or.hadron_arm .eq. 6 ) then
+	  x_P_arm = -main%target%y
+	  y_P_arm = -main%target%x*spec%p%cos_th - main%target%z*spec%p%sin_th*sin(spec%p%phi)
+	  z_P_arm =  main%target%z*spec%p%cos_th + main%target%x*spec%p%sin_th*sin(spec%p%phi)
 
+! %.. Apply spectrometer offset (using spectrometer coordinate system).
+	  x_P_arm = x_P_arm - spec%p%offset%x
+	  y_P_arm = y_P_arm - spec%p%offset%y
+	  z_P_arm = z_P_arm - spec%p%offset%z
+	  else
 !       WB take into account spectrometer offsets in Hall Coord. system
 !       WB 2016: x_vert, y_vert, z_vert are all in Hall Coord. syste,
 
@@ -1427,7 +1436,7 @@ c	enddo
 
 ! WB 2012, 2016 correction
 	  z_P_arm =  z_vert*spec%p%cos_th + y_vert*spec%p%sin_th*sin(spec%p%phi)
-
+           endif
 ! %.. Apply spectrometer offseta in angle in SP system (using spectrometer coordinate system).
 
 	  dx_P_arm = main%SP%p%xptar - spec%p%offset%xptar
@@ -1639,6 +1648,14 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 	  endif
 	  delta_E_arm = main%SP%e%delta
 
+         if (electron_arm .eq. 1.or.electron_arm .eq. 5.or.electron_arm .eq. 6 ) then
+	  x_E_arm = -main%target%y
+	  y_E_arm = -main%target%x*spec%e%cos_th - main%target%z*spec%e%sin_th*sin(spec%e%phi)
+	  z_E_arm =  main%target%z*spec%e%cos_th + main%target%x*spec%e%sin_th*sin(spec%e%phi)
+	  x_E_arm = x_E_arm - spec%e%offset%x
+	  y_E_arm = y_E_arm - spec%e%offset%y
+	  z_E_arm = z_E_arm - spec%e%offset%z
+         else
 ! WB take into account spectrometer offsets in Hall Coord. system
 ! WB 2016 x,y,z_vert in Hall System
 
@@ -1647,13 +1664,11 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 	  z_vert = main%target%z - spec%e%offset%z
 
 ! WB 2016 x,y,z_E_arm vertex in E-SP system
-
 	  x_E_arm = x_vert
 	  y_E_arm =  -z_vert*spec%e%sin_th*sin(spec%e%phi) + y_vert*spec%e%cos_th
-
 ! WB 2012,2-16 correction to z_E_arm
 	  z_E_arm =  z_vert*spec%e%cos_th +  y_vert*spec%e%sin_th*sin(spec%e%phi)
-
+          endif
 ! ... Apply spectrometer offset (using spectrometer coordinate system).
 
 	  dx_E_arm = main%SP%e%xptar - spec%e%offset%xptar
