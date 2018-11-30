@@ -78,8 +78,8 @@
 
 20	continue
 	if (electron_arm.eq.1) then		!electron is in HMS
-	  s_Al = 0.020*inch_cm                  ! target chamber exit
-	  s_air = 24.61                            ! air distance to spectr. entrance
+	  s_Al = 0.016*inch_cm                  ! target chamber exit
+	  s_air = 15                            ! air distance to spectr. entrance
  	  s_kevlar = 0.015*inch_cm              ! spectr. window
 	  s_mylar = 0.005*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta+targ%angle))
@@ -102,18 +102,18 @@
 	  s_mylar = 0.010*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	else if (electron_arm.eq.5 .or. electron_arm.eq.6) then	!SHMS
-	  s_Al = 0.020*inch_cm + 0.010*inch_cm
-	  s_air = 57.27
- 	  s_kevlar = 0.0
-	  s_mylar = 0.0
+	  s_Al = 0.008*inch_cm
+	  s_air = 15
+ 	  s_kevlar = 0.005*inch_cm
+	  s_mylar = 0.003*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	endif
 	s_target = forward_path
 
 	if (liquid) then
 	  if (targ%can .eq. 1) then		!beer can
-	     side_path = 1.325*inch_cm / abs(sin(theta)) ! regular cell in HallC
-	     !side_path = 0.80039*inch_cm / abs(sin(theta)) ! cigar cell in HallA
+	    ! side_path = 1.325*inch_cm / abs(sin(theta)) ! regular cell in HallC
+	    side_path = 0.80039*inch_cm / abs(sin(theta)) ! cigar cell in HallA
 	    if (forward_path.lt.side_path) then
 	      s_Al = s_Al + 0.005*inch_cm / abs(cos(theta)) ! side wall HallA
 	    else
@@ -169,8 +169,8 @@ c	       stop
 
 30	continue
 	if (hadron_arm.eq.1) then		!proton in HMS
-	  s_Al = 0.020*inch_cm
-	  s_air = 24.61
+	  s_Al = 0.016*inch_cm
+	  s_air = 15
  	  s_kevlar = 0.015*inch_cm
 	  s_mylar = 0.005*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta+targ%angle))
@@ -197,10 +197,10 @@ c	       stop
 	  s_mylar = 0.010*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	else if (hadron_arm.eq.5 .or. hadron_arm.eq.6) then	!SHMS
-	  s_Al = 0.020*inch_cm + 0.010*inch_cm
-	  s_air = 57.27
- 	  s_kevlar = 0.0
-	  s_mylar = 0.0
+	  s_Al = 0.008*inch_cm
+	  s_air = 15
+ 	  s_kevlar = 0.005*inch_cm
+	  s_mylar = 0.003*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	endif
 
