@@ -58,6 +58,7 @@
 	type(EXP_field)::	EXPER
 	logical mc_smear
 	logical mc_smear_addl
+	logical recon_mc_smear_addl
 	logical debug(6)
 	integer *8 ntried
 	integer*4 nevent, ngen, deForest_flag, Nntu, sf_version
@@ -84,7 +85,7 @@
      >    sigc_kin_min,sigc_kin_max,sigc_kin_ind,targ_Bangle, targ_Bphi, targ_pol,
      >    drift_to_cal,sign_hadron,sigc_flag,sigc_nbin,
      >    gen, spec, cuts, edge, VERTEXedge, SPedge,
-     >    slop, EXPER, mc_smear, mc_smear_addl, debug, nevent, ntried, ngen,
+     >    slop, EXPER, mc_smear, mc_smear_addl, recon_mc_smear_addl, debug, nevent, ntried, ngen,
      >    deForest_flag, Nntu, ncontribute, npasscuts, ncontribute_no_rad_proton,
      >    spect_mode, phsp_mode, base,
      >    extra_dbase_file,tgt_field_file,using_E_arm_montecarlo,using_P_arm_montecarlo,

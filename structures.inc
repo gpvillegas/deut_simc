@@ -181,6 +181,7 @@
            sequence
            real*8	P,theta,cos_th,sin_th,phi
 	   real*8       sig_musc(2)
+	   real*8       sig_smear(4)		
 	   type(spec_offset)::offset
        end type
 
@@ -188,6 +189,7 @@
            sequence
            real*8	P,theta,cos_th,sin_th,phi
 	   real*8       sig_musc(2)
+	   real*8       sig_smear(4)
 	   type(spec_offset2)::offset
        end type
 

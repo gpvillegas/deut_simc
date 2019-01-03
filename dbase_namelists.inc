@@ -119,6 +119,7 @@
      >	   ngen,
      >	   mc_smear,
      >	   mc_smear_addl,
+     >     recon_mc_smear_addl,
      >	   hard_cuts,
      >	   using_rad,
      >	   spect_mode,

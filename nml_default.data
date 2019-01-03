@@ -15,8 +15,8 @@
     doing_pion = F
     which_pion = 0
     doing_delta = F
-     doing_semi = F
-     doing_hplus = T
+    doing_semi = F
+    doing_hplus = T
     doing_rho = F
     doing_decay = F
     ctau = 0
@@ -57,6 +57,7 @@
     spec%e%P = 0.
     spec%e%theta = 0.
     spec%e%sig_musc = 1.1e-6, 1.2e-6
+    spec%e%sig_smear = 1.e-8, 1.e-8, 1.e-8, 1.e-8
  /
  =?
 
@@ -64,6 +65,7 @@
     spec%p%P = 0.
     spec%p%theta = 0.
     spec%p%sig_musc = 1.1e-6, 1.2e-6
+    spec%p%sig_smear = 1.e-8, 1.e-8, 1.e-8, 1.e-8
  /
  =?
 
@@ -111,6 +113,7 @@
     tgt_field_file = ' '
     mc_smear = F
     mc_smear_addl = F
+    recon_mc_smear_addl = F
     col_flag = 0
     ngen = 0
     spect_mode = 0

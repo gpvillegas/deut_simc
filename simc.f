@@ -1306,7 +1306,7 @@ c	enddo
 	real*8 x_E_arm,y_E_arm,z_E_arm,dx_E_arm,dy_E_arm,delta_E_arm
 	real*8 x_P_arm,y_P_arm,z_P_arm,dx_P_arm,dy_P_arm,delta_P_arm
 	real*8 xfp, yfp, dxfp, dyfp
-	real*8 eloss_E_arm, eloss_P_arm, r, beta, dangles(2), dang_in(2)
+	real*8 eloss_E_arm, eloss_P_arm, r, beta, dangles(2), dang_in(2), devs(4)
 	real*8 dangles_extra(2)
 	logical success
 	logical ok_E_arm, ok_P_arm
@@ -1516,7 +1516,14 @@ C DJG moved this to the last part of generate!!!
      >		ntup%resfac, x_P_arm, ok_P_arm, pathlen, hadron_arm, use_first_cer)
 	  endif
 
-
+!       WB 2018 add additional smearing for reconstructed variables
+	  if (recon_mc_smear_addl) then
+	     call extra_smear(4, spec%p%sig_smear, devs)
+	     y_P_arm = y_P_arm + devs(1)  
+	     dx_P_arm = dx_P_arm + devs(2)  
+	     dy_P_arm = dy_P_arm + devs(3)  
+	     delta_P_arm = delta_P_arm + devs(4)
+	  endif
 C DJG Do polarized target field stuff if needed
 C DJG Note that the call to track_to_tgt is with -fry: for some reason that routine then
 C DJG sets xx=-fry, and calls mc_hms_recon with xx, so it all works out. Whatever.
@@ -1748,8 +1755,16 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
      >          zhadron,electron_arm,drift_to_cal)
 	  endif
 	  ntup%resfac=ntup%resfac+tmpfact
-
-
+	  
+!       WB 2018 add addition smearing for reconstructed variables
+	  if (recon_mc_smear_addl) then
+	     call extra_smear(4, spec%e%sig_smear, devs)
+	     y_E_arm = y_E_arm + devs(1)  
+	     dx_E_arm = dx_E_arm + devs(2)  
+	     dy_E_arm = dy_E_arm + devs(3)  
+	     delta_E_arm = delta_E_arm + devs(4)
+	  endif
+	  
 C DJG Do polarized target field stuff if needed
 C DJG Note that the call to track_to_tgt is with -fry: for some reason that routine then
 C DJG sets xx=-fry, and calls mc_hms_recon with xx, so it all works out. Whatever.
@@ -1952,5 +1967,26 @@ c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 !	print *, "beam : ",zv_b, yv_b, beta_t
 !	print *, "Spec : ",sp_type , ": ",zv_t, yv_t, alpha_t
 
+	return
+	end
+	
+!------------------------------------------------------------------
+	
+	subroutine extra_smear(n, sigma, values)
+	
+	implicit none
+	
+	integer n, i
+	real*8 sigma(n) , values(n)
+	real*8 gauss1, nsig_max
+	
+	parameter (nsig_max = 3.5)
+	
+!       Compute additional smearing 
+!       Generate two Gaussian numbers BELOW nsig_max.
+	
+	do i = 1, n
+	   values(i) = sigma(i) * gauss1(nsig_max)
+	enddo
 	return
 	end
