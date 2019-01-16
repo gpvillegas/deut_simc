@@ -359,6 +359,8 @@
           NtupleTag(m) = 'h_Thf'      ! 67 RCT 8/9/2016 outgoing proton in-plane angle
 	  m = m+1
 	  NtupleTag(m) = 'Ein_v'	! 68 vertex beam energy
+          
+
 	endif
 
 !	else		!used to be the if (doing_phsp) option.

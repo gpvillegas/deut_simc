@@ -135,8 +135,8 @@ C shower counter
 	parameter (hcal_radlen = 2.50)
 
 C Wire chamber resolutions (sigma)
-	real*8 hdc_sigma(1:12)/	0.030,0.030,0.030,0.030,0.030,0.030,
-     >				0.030,0.030,0.030,0.030,0.030,0.030/
+	real*8 hdc_sigma(1:12)/	0.035,0.035,0.035,0.035,0.035,0.035,
+     >				0.035,0.035,0.035,0.035,0.035,0.035/
 
 C Wire plane positions, construct hdc_zpos array using these parameters
 	integer*4 hdc_nr_cham,hdc_nr_plan

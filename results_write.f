@@ -124,7 +124,8 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	ntu(28) = recon%W/1000.				!W - GeV/c
 	ntu(29) = recon%epsilon				!epsilon
 	ntu(30) = recon%Em/1000.			!GeV
-	ntu(31) = recon%Pm/1000.			!GeV/c
+        !ntu(30) = vertex%Em/1000.                       !GeV                     
+	ntu(31) = recon%Pm/1000. !GeV/c
 	ntu(32) = recon%theta_pq			!theta_pq - radians
 	ntu(33) = recon%phi_pq				!phi_pq - radians
 
@@ -245,13 +246,13 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(59) = main%RECON%p%yv                    !                  yv
 	  ntu(60) = main%RECON%e%zv                    !  e recon. vertex  zv
 	  ntu(61) = main%RECON%e%yv                    !           vertex  yv
-	  ntu(62) = recon%p%p                          !  final proton momentum
-	  ntu(63) = recon%e%p                          !  final electron momentum
+	  ntu(62) = recon%p%P                          !  final proton momentum
+	  ntu(63) = recon%e%P                          !  final electron momentum
 	  ntu(64) = recon%ein                          !  incident energy (recon)
 	  ntu(65) = recon%theta_rq                     !  recoil angle
 	  ntu(66) = main%SF_weight                     !  Spectral Function fro recon. quantities
 	  ntu(67) = (spec%p%theta+recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle
-	  ntu(68) = vertex%ein                          !  incident energy (vertex)
+	  ntu(68) = vertex%ein                          !  incident energy (vertex)                         
 	endif
 
 ! write output

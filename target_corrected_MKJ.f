@@ -2,9 +2,9 @@
      &                               mass, typeflag)
 
 	implicit none
-	include 'simulate.inc' ! target information in target.inc
+	include 'simulate.inc'
 
-	integer narm, wcounter
+	integer narm
 	integer typeflag   !1=generate eloss, 2=min, 3=max, 4=most probable
 	real*8 zpos, energy, mass, theta
 	real*8 Eloss, radlen
@@ -15,24 +15,13 @@
 	real*8 z_can,t,atmp,btmp,ctmp,costmp,th_can	!for the pudding-can target.
 	logical liquid
 
-	data wcounter/0/
-
 	s_Al = 0.0
 	liquid = targ%Z.lt.2.4
 
-	if ((abs(zpos) .gt. (targ%length/2.+1.d-5)) ) then
-	  wcounter = wcounter + 1
-	  if (wcounter .le. 100) then
-	     write(6,*) 'WARNING : ', wcounter, ' (Max 100)'
-	     write(6,*) 'call to trip_thru_target has |zpos| > targ.length/2.'
-	     write(6,*) 'could be numerical error, or could be error in target offset'
-	     write(6,*) 'zpos=',zpos,'  targ%length/2.=',targ%length/2.
-	  endif
-! WB modification to force reasonable values
-	  zpos = sign((targ%length/2.-1.d-5), zpos)
-	  if (wcounter .le. 100) then
-	     write(6,*) 'Force position to max. possible value : ', zpos
-	  endif
+	if (abs(zpos) .gt. (targ%length/2.+1.e-5)) then
+	  write(6,*) 'call to trip_thru_target has |zpos| > targ.length/2.'
+	  write(6,*) 'could be numerical error, or could be error in target offset'
+	  write(6,*) 'zpos=',zpos,'  targ%length/2.=',targ%length/2.
 	endif
 ! Which particle are we interested in?
 
@@ -78,9 +67,9 @@
 
 20	continue
 	if (electron_arm.eq.1) then		!electron is in HMS
-	  s_Al = 0.020*inch_cm                  ! target chamber exit
-	  s_air = 24.61                            ! air distance to spectr. entrance
- 	  s_kevlar = 0.015*inch_cm              ! spectr. window
+	  s_Al = 0.020*inch_cm
+	  s_air = 24.61
+ 	  s_kevlar = 0.015*inch_cm
 	  s_mylar = 0.005*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta+targ%angle))
 	else if (electron_arm.eq.2) then			!SOS
@@ -102,6 +91,12 @@
 	  s_mylar = 0.010*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	else if (electron_arm.eq.5 .or. electron_arm.eq.6) then	!SHMS
+C Scattering before magnets:  Approximate all scattering as occuring AT TARGET.
+C SHMS
+C  20 mil Al scattering chamber window (X0=8.89cm)
+C  57.27 cm air (X0=30420cm)
+C spectrometer entrance window
+C  10 mil Al s (X0=8.89cm)
 	  s_Al = 0.020*inch_cm + 0.010*inch_cm
 	  s_air = 57.27
  	  s_kevlar = 0.0
@@ -112,10 +107,9 @@
 
 	if (liquid) then
 	  if (targ%can .eq. 1) then		!beer can
-	     side_path = 1.325*inch_cm / abs(sin(theta)) ! regular cell in HallC
-	     !side_path = 0.80039*inch_cm / abs(sin(theta)) ! cigar cell in HallA
+	    side_path = 1.325*inch_cm / abs(sin(theta))
 	    if (forward_path.lt.side_path) then
-	      s_Al = s_Al + 0.005*inch_cm / abs(cos(theta)) ! side wall HallA
+	      s_Al = s_Al + 0.005*inch_cm / abs(cos(theta))
 	    else
 	      s_target = side_path
 	      s_Al = s_Al + 0.005*inch_cm / abs(sin(theta))
@@ -197,6 +191,12 @@ c	       stop
 	  s_mylar = 0.010*inch_cm
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
 	else if (hadron_arm.eq.5 .or. hadron_arm.eq.6) then	!SHMS
+C Scattering before magnets:  Approximate all scattering as occuring AT TARGET.
+C SHMS
+C  20 mil Al scattering chamber window (X0=8.89cm)
+C  57.27 cm air (X0=30420cm)
+C spectrometer entrance window
+C  10 mil Al s (X0=8.89cm)
 	  s_Al = 0.020*inch_cm + 0.010*inch_cm
 	  s_air = 57.27
  	  s_kevlar = 0.0
@@ -220,6 +220,7 @@ c	       stop
 ! pathlength is then (z_intersect - z_scatter)/cos(theta)
 ! Angle from center to z_intersect is acos(z_intersect/R).  Therefore the
 ! angle between the particle and wall is pi/2 - (theta - theta_intersect)
+
 	    t=tan(theta)**2
 	    atmp=1+t
 	    btmp=-2*zpos*t
@@ -284,7 +285,7 @@ c	      stop
 	logical	liquid
 
 	real*8 zero
-	parameter (zero=0.0d0)	!double precision zero for subroutine calls
+	parameter (zero=0.0e0)	!double precision zero for subroutine calls
 
 !Given limiting values for the electron/proton angles, the z-position in the
 !target, and beta for the proton, determine min and max losses in target (and
@@ -455,6 +456,7 @@ C the perfect range, but it's easier than reproducing the generated limits here
 ! ... Minimum z_init is -radius.
 	  zz = -(targ%length/2.)/tan(the%min)
 	  zz = max (zz,(-targ%length/2.))
+
 	  call trip_thru_target (3, zz, energymin, thp%min, E1, t1, m, 3)
 	  call trip_thru_target (3, zz, energymax, thp%min, E2, t2, m, 3)
 	  targ%Eloss(3)%max = max(E1,E2)
@@ -465,7 +467,6 @@ C the perfect range, but it's easier than reproducing the generated limits here
 ! ........ wrong for the pudding can targ.  Check it out later.
 	  targ%Eloss(3)%min = 1.d10
 	  do i = 0, 3
-	    print *, 'target.d:457'
 	    call trip_thru_target (3, z%min+int(i/2)*(z%max-z%min), energymin,
      >		thp%min+mod(i,2)*(thp%max-thp%min), E1, t1, m, 2)
 	    if (E1 .lt. targ%Eloss(3)%min) then
@@ -475,7 +476,7 @@ C the perfect range, but it's easier than reproducing the generated limits here
 	      th1 = thp%min+mod(i,2)*(thp%max-thp%min)
 	    endif
 	  enddo
-	  Call trip_thru_target (3, zz, energymax, th1, E1, t1, m, 2)
+	  call trip_thru_target (3, zz, energymax, th1, E1, t1, m, 2)
 	  targ%Eloss(3)%min = min(targ%Eloss(3)%min, E1)
 
 	endif
@@ -488,9 +489,9 @@ C the perfect range, but it's easier than reproducing the generated limits here
 ! Extreme multiple scattering.  Use nominal beam energy rather than minimum
 !  (should be close enough)
 
-	call extreme_target_musc(ebeam,1.d0,
+	call extreme_target_musc(ebeam,1.e0,
      >		targ%teff(1)%max,targ%musc_max(1),targ%musc_nsig_max)
-	call extreme_target_musc(pe%min,1.d0,
+	call extreme_target_musc(pe%min,1.e0,
      >		targ%teff(2)%max,targ%musc_max(2),targ%musc_nsig_max)
 	call extreme_target_musc(pp%min,betap%min,
      >		targ%teff(3)%max,targ%musc_max(3),targ%musc_nsig_max)
@@ -520,7 +521,7 @@ C the perfect range, but it's easier than reproducing the generated limits here
 ! Note teff is thickness of material, in radiation lengths.
 
 c	theta_sigma = Es/p/beta * sqrt(teff) * (1+epsilon*log10(teff))
-C Better form for beta .ne. 1
+C Better form for beta .ne. 1, from Lynch and Dahl, NIM B58 (1991) p.6-10, Eqn. 6
 	theta_sigma = Es/p/beta * sqrt(teff) * (1+epsilon*log10(teff/beta**2))
 
 ! Compute scattering angles in perpendicular planes.
@@ -536,30 +537,9 @@ C Better form for beta .ne. 1
 	entry extreme_target_musc(p, beta, teff, dangle, r)
 
 c	theta_sigma = Es/p/beta * sqrt(teff) * (1+epsilon*log10(teff))
-C Better form for beta .ne. 1
+C Better form for beta .ne. 1, from Lynch and Dahl, NIM B58 (1991) p.6-10, Eqn. 6
 	theta_sigma = Es/p/beta * sqrt(teff) * (1+epsilon*log10(teff/beta**2))
 	dangle = theta_sigma * nsig_max
 	r = nsig_max
-	return
-	end
-
-!------------------------------------------------------------------
-
-	subroutine target_extra_musc(sigma, dangle)
-
-	implicit none
-
-	real*8 sigma(2) , dangle(2)
-	real*8 gauss1, nsig_max
-
-	parameter (nsig_max = 3.5)
-
-! Compute additional multiple scattering angles in perpendicular planes.
-! Generate two Gaussian numbers BELOW nsig_max. These are used mostly for
-! tests 
-
-	dangle(1) = sigma(1) * gauss1(nsig_max)
-	dangle(2) = sigma(2) * gauss1(nsig_max)
-
 	return
 	end

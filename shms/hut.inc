@@ -132,10 +132,10 @@ C Wire chamber resolutions (sigma)
 c SHMS chambers assume sigma=200um per plane
 c   planes will be two sets of 2u,2v,2x but need to mock it by 2 sets of 4x,2y
 c      planes 2 and 5 in group of 6 are y planes
-c	real*8 hdc_sigma(1:12)/	0.024,0.014,0.024,0.017,0.014,0.017,
-c     >				0.024,0.014,0.024,0.017,0.014,0.017/
-	real*8 hdc_sigma(1:12)/	0.020,0.020,0.020,0.020,0.020,0.020,
-     >				0.020,0.020,0.020,0.020,0.020,0.020/
+c	real*8 hdc_sigma(1:12)/	0.035,0.035,0.035,0.035,0.035,0.035,
+c     >				0.035,0.035,0.035,0.035,0.035,0.035/
+	real*8 hdc_sigma(1:12)/	0.035,0.035,0.035,0.035,0.035,0.035,
+     >				0.035,0.035,0.035,0.035,0.035,0.035/
 
 C Wire plane positions, construct hdc_zpos array using these parameters
 
