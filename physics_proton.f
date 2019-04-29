@@ -139,7 +139,8 @@
 
 	subroutine fofa_best_fit(qsquar,GE,GM)
 	!call fofa_bosted(qsquar,GE,GM)
-	call fofa_JRA(qsquar,GE,GM)
+!	call fofa_JRA(qsquar,GE,GM)
+	call fofa_Bosted(qsquar,GE,GM)
 	return
 	end
 

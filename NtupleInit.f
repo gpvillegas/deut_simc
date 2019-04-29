@@ -355,11 +355,26 @@
 	  NtupleTag(m) = 'theta_rq'	! 65 recoil angle
 	  m = m+1
 	  NtupleTag(m) = 'SF_weight_recon'	! 66 spectral function with reconstructed quantities
-	  m = m+1                     ! 67 RCT 8/9/2016 outgoing proton in-plane angle
-          NtupleTag(m) = 'h_Thf'      ! 67 RCT 8/9/2016 outgoing proton in-plane angle
 	  m = m+1
-	  NtupleTag(m) = 'Ein_v'	! 68 vertex beam energy
-          
+          NtupleTag(m) = 'h_Thf'      ! 67 RCT 8/9/2016 outgoing proton in-plane angle
+	  m = m+1	 
+	  NtupleTag(m) =  'Ein_v'	! 68 vertex beam energy
+	  m = m+1	 
+	  NtupleTag(m) = ' Q2_v'	!  69 Q2 (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'nu_v'	        ! 70  energy transfer (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'q_lab_v'	!  71 q (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'pm_v' 	!  72 p_miss (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'pm_par_v'	!  73 p_miss_par (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'pf_v'	       !  74 p_f (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'Ep_v' 	!  75 Ep energy (vertex)                         
+	  m = m+1	 
+	  NtupleTag(m) = 'Ef_v' 	!  76 final electron  energy (vertex)                         
 
 	endif
 
