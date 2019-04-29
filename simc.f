@@ -1325,7 +1325,8 @@ c	enddo
 
 	real*8 x_vert, y_vert, z_vert  ! vertex inlcuding spectr. offsets
 	real*8 zv, yv ! reconstructed vertex positions
-
+	real*8 Zv_num, Zv_denom  !Zvertex numerator, denominator (using hcana definition)
+	real*8 ytar_shift
 	real*8 ctheta,stheta,phad,pelec
 	real*8 zhadron
 
@@ -1593,7 +1594,14 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 
 ! store reconstructed vertex locations
 
-	main%RECON%p%zv = zv
+	!main%RECON%p%zv = zv	!this method, using subroutine recon_vertex does not seems to account for beam position offset
+	
+	!C.Y. April 29, 2019  : Added z-vertex formula, which includes beam offsets (x bpm).  Same formula from hcana used. 
+	!The sign in main%target%x accounts for  simc  using EPICS coordeinate system, so it is opposite from hcana
+	ytar_shift = recon%p%z + spec%p%offset%y
+	Zv_num = (ytar_shift + main%target%x*(spec%p%cos_th-recon%p%yptar*spec%p%sin_th*sin(spec%p%phi)))
+	Zv_denom = (-spec%p%sin_th*sin(spec%p%phi)-recon%p%yptar*spec%p%cos_th)  
+	main%RECON%p%zv = Zv_num / Zv_denom
 	main%RECON%p%yv = yv
 	main%RECON%p%xv = main%target%x
 
@@ -1835,7 +1843,13 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
      >                    zv, yv)
 
 ! store reconstruced values
-	main%RECON%e%zv = zv
+	!main%RECON%e%zv = zv
+	!C.Y. April 29, 2019  : Added z-vertex formula, which includes beam offsets (x bpm).  Same formula from hcana used. 
+	!The sign in main%target%x accounts for  simc  using EPICS coordeinate system, so it is opposite from hcana
+        ytar_shift = recon%e%z + spec%e%offset%y
+	Zv_num = (ytar_shift + main%target%x*(spec%e%cos_th-recon%e%yptar*spec%e%sin_th*sin(spec%e%phi)))
+	Zv_denom = (-spec%e%sin_th*sin(spec%e%phi) - recon%e%yptar*spec%e%cos_th)
+	main%RECON%e%zv = Zv_num / Zv_denom  
 	main%RECON%e%yv = yv
 	main%RECON%e%xv = main%target%x
 

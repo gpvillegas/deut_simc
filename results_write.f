@@ -59,6 +59,10 @@
 	  Pm_Heepy =  (recon%Pmz*recon%uq%y-recon%Pmy*recon%uq%z)
      >		/ sqrt(recon%uq%y**2+recon%uq%z**2)
 	  Pm_Heepx =  -recon%Pmx
+c
+	  Pm_Heepx= recon%Pmy
+	  Pm_Heepy= -recon%Pmx
+	  Pm_Heepz= -recon%Pmz
 	endif
 
 	if(electron_arm.eq.1 .or. electron_arm.eq.3.or. electron_arm.eq.7)then !electron = right side.
@@ -253,6 +257,15 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(66) = main%SF_weight                     !  Spectral Function fro recon. quantities
 	  ntu(67) = (spec%p%theta+recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle
 	  ntu(68) = vertex%ein                          !  incident energy (vertex)                         
+! new WB CY
+	  ntu(69) = vertex%Q2                          !  Q2 (vertex)                         
+	  ntu(70) = vertex%NU                          !  energy transfer (vertex)                         
+	  ntu(71) = vertex%Q                           !  q (vertex)                         
+	  ntu(72) = vertex%PM                          !  p_miss (vertex)                         
+	  ntu(73) = vertex%PMPAR                       !  p_miss_par (vertex)                         
+	  ntu(74) = vertex%P%P                         !  p_f (vertex)                         
+	  ntu(75) = vertex%P%E                         !  Ep energy (vertex)                         
+	  ntu(76) = vertex%e%E                         !  final electron energy (vertex)                         
 	endif
 
 ! write output
