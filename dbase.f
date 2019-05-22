@@ -888,6 +888,8 @@ C DJG:
      >     (Implemented for beam and scattered electron only)'
 	if (.not.correct_Eloss) write(6,*) 'NOTE: Will NOT correct reconstructed data for energy loss'
 	if (.not.correct_raster) write(6,*) 'NOTE: Will NOT use raster terms in reconstruction'
+	if (set_allow_scat_in_coll .gt. 0) write(6,*) 'NOTE: Will use allow the particles 
+     > to pass through HMS collimator, out to ',set_allow_scat_in_coll,' cm'
 	write(6,*) ''
 	write(6,*) ' *************************************************'
 ! everything has been set now dump the parameters

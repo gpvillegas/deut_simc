@@ -72,6 +72,7 @@
 	integer*4 which_kaon, which_pion
 	logical using_cit_generation, using_Coulomb, using_Eloss
 	logical correct_Eloss, correct_raster,do_fermi
+	real*8 set_allow_scat_in_coll
 	logical using_tgt_field
 	integer*4 electron_arm, hadron_arm, use_first_cer
 
@@ -81,7 +82,7 @@
      >    normfac, wtcontribute, dE_edge_test, Egamma_gen_max,pt_b_param,
      >    sigc_kin_min,sigc_kin_max,sigc_kin_ind,targ_Bangle, targ_Bphi, targ_pol, 
      >    drift_to_cal,sign_hadron,sigc_flag,sigc_nbin,
-     >    gen, spec, cuts, edge, VERTEXedge, SPedge,
+     >    gen, spec, cuts, edge, VERTEXedge,set_allow_scat_in_coll, SPedge,
      >    slop, EXPER, mc_smear, debug, nevent, ntried, ngen,
      >    deForest_flag, Nntu, ncontribute, npasscuts, ncontribute_no_rad_proton, 
      >    spect_mode, phsp_mode, base,
