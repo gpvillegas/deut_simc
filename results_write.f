@@ -19,6 +19,12 @@
 !local (e,e'pi/K) calculations:
 !	real*8 t		!t
 	real*8 dummy
+c mkj ( used in mc_hms.f)
+        real energy_loss_coll
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	real*8 prob_abs
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll	
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 
 	integer i
 

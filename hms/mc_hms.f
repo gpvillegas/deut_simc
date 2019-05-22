@@ -133,12 +133,32 @@ c	parameter (z_off=+1.50)		!1996 position
 ! Gaby's dipole shape stuff
 	logical hit_dipole
 	external hit_dipole
+c
+c mkj
+	real*8 epart,mpart,eloss
+	real*8 x_track,y_track
+	real*8 x_diff,y_diff,z_diff
+        real*8 ycoll,dcoll,radw
+        real energy_loss_coll
+	logical hit_coll
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	real*8 prob_abs,xn_abs
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 
 	save		!Remember it all!
 
 C ================================ Executable Code =============================
 
 ! Initialize ok_spec to .false., reset decay flag
+
+	energy_loss_coll = 0.
+	hit_coll = .false.
+	prob_abs = 1.0
+	x_at_coll = 0.
+	y_at_coll = 0.
+	xp_at_coll = 0.
+	yp_at_coll = 0.
 
 	ok_spec = .false.
 	dflag = .false.			!particle has not decayed yet
@@ -193,6 +213,7 @@ C------------------------------------------------------------------------------C
 ! Check front of fixed slit.
 	  zdrift = z_entr
 	  call project(xs,ys,zdrift,decay_flag,dflag,m2,p,pathlen) !project and decay
+	  if ( allow_scat_in_coll .le. 0 ) then
 	  if (abs(ys-y_off).gt.h_entr) then
 	    hSTOP_slit_hor = hSTOP_slit_hor + 1
 	    goto 500
@@ -205,6 +226,53 @@ C------------------------------------------------------------------------------C
 	    hSTOP_slit_oct = hSTOP_slit_oct + 1
 	    goto 500
 	  endif
+          endif
+c
+	    if ( allow_scat_in_coll .gt. 0 ) then
+               y_track= ys + dydzs*(z_exit-z_entr) 
+               x_track= xs + dxdzs*(z_exit-z_entr)
+               if (abs(y_track-y_off).gt.h_entr+allow_scat_in_coll) then
+        	    hSTOP_slit_hor = hSTOP_slit_hor + 1
+	            goto 500
+               endif
+               if (abs(x_track-x_off).gt.v_entr+allow_scat_in_coll) then
+        	    hSTOP_slit_vert = hSTOP_slit_vert + 1
+	            goto 500
+	       endif
+c   
+               if (abs(y_track-y_off).gt.h_entr) then
+        	    hit_coll = .true.
+               endif
+               if (abs(x_track-x_off).gt.v_entr) then
+        	    hit_coll = .true.
+	       endif
+               if (abs(x_track-x_off).gt. (-v_entr/h_entr*abs(y_track-y_off)+3*v_entr/2)) then
+        	    hit_coll = .true.
+	       endif
+               if ( hit_coll) then
+	       xn_abs = (57.49 - 6.0838*p+0.5627*p*p)*(184.)**(.7) ! fit to pp crosssection times A^.7
+	       epart= sqrt(p*p+m2)
+	       mpart=sqrt(m2)
+               z_diff = z_exit - z_entr
+               y_diff = y_track - ys
+               x_diff = x_track - xs
+               ycoll= sqrt(y_diff*y_diff + z_diff*z_diff) 
+               dcoll= sqrt(ycoll*ycoll + x_diff*x_diff) 
+               call enerloss_new(dcoll,17.0d00,74.0d00,184.00d00,epart,mpart,1,Eloss)
+	       prob_abs = 0.90*exp(-0.0006/184.*xn_abs*dcoll*17.0) ! determine 0.90 factor from elastic data.
+	       energy_loss_coll = eloss
+	       radw=dcoll/.35
+               call musc_ext(m2,p,radw,dcoll,dydzs,dxdzs,ys,xs)
+	       epart = epart-eloss
+	       p = sqrt( epart*epart - mpart*mpart)
+	       dpps=(p-p_spec)/p_spec*100.
+               endif
+		  x_at_coll = x_track
+		  y_at_coll = y_track
+                  yp_at_coll = dydzs
+                  xp_at_coll = dxdzs
+                 goto 400
+              endif
 
 !Check back of fixed slit.
 
@@ -225,7 +293,7 @@ C------------------------------------------------------------------------------C
 
 ! Go to Q1 IN  mag bound.  Drift rather than using COSY matrices
 
-	  if (.not.adrift(spectr,1)) write(6,*) 'Transformation #1 is NOT a drift'
+ 400	  if (.not.adrift(spectr,1)) write(6,*) 'Transformation #1 is NOT a drift'
 	  zdrift = driftdist(spectr,1) - z_exit
 	  call project(xs,ys,zdrift,decay_flag,dflag,m2,p,pathlen) !project and decay
 	  if ((xs*xs + ys*ys).gt.r_Q1*r_Q1) then
