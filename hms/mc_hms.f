@@ -213,6 +213,7 @@ C------------------------------------------------------------------------------C
 ! Check front of fixed slit.
 	  zdrift = z_entr
 	  call project(xs,ys,zdrift,decay_flag,dflag,m2,p,pathlen) !project and decay
+	  write(*,*) " allow_scat_in_coll = " , allow_scat_in_coll
 	  if ( allow_scat_in_coll .le. 0 ) then
 	  if (abs(ys-y_off).gt.h_entr) then
 	    hSTOP_slit_hor = hSTOP_slit_hor + 1
