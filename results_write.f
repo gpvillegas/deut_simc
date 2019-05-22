@@ -19,6 +19,12 @@
 !local (e,e'pi/K) calculations:
 !	real*8 t		!t
 	real*8 dummy
+c mkj ( used in mc_hms.f)
+        real energy_loss_coll
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	real*8 prob_abs
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll	
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 
 	integer i
 
@@ -265,7 +271,11 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(73) = vertex%PMPAR                       !  p_miss_par (vertex)                         
 	  ntu(74) = vertex%P%P                         !  p_f (vertex)                         
 	  ntu(75) = vertex%P%E                         !  Ep energy (vertex)                         
-	  ntu(76) = vertex%e%E                         !  final electron energy (vertex)                         
+	  ntu(76) = vertex%e%E                         !  final electron energy (vertex) 
+	   ntu(77) =x_at_coll
+	   ntu(78) =y_at_coll
+	   ntu(79) =energy_loss_coll
+	   ntu(80) =prob_abs
 	endif
 
 ! write output

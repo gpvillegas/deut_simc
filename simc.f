@@ -40,6 +40,12 @@
 
 	real*8 grnd
 	real*8 ang_targ_earm,ang_targ_parm
+c mkj ( used in mc_hms.f)
+        real energy_loss_coll
+	real*8 prob_abs
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 c
 
 ! INITIALIZE
@@ -103,6 +109,9 @@ c
 
 	r = grnd()
 	ntried = 0
+c
+	allow_scat_in_coll = 0.
+	if ( set_allow_scat_in_coll .gt. 0 ) allow_scat_in_coll = set_allow_scat_in_coll 
 
 ! GAW - insert calls to initialize target field for both arms
 ! mkj 10-20-2003 add if statements to determine the angle magnitude

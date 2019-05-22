@@ -46,6 +46,7 @@
      >	   ctau,
      >     use_sf,
      >     sf_version,
+     >     set_allow_scat_in_coll,
      >     transparency
 
 *	DEBUG

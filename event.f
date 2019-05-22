@@ -127,6 +127,12 @@
 
 	real*8 nsig_max
 	parameter(nsig_max=3.0d0)      !max #/sigma for gaussian ran #s.
+c
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	real*8 prob_abs
+        real energy_loss_coll
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll	
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 
 
 ! Randomize the position of the interaction inside the available region.
@@ -206,6 +212,7 @@ C modified 5/15/06 for poinct
 
 5	success = .false.
 	main%gen_weight = 1.0
+	prob_abs = 1.0
 
 ! Generated quantities: (phase_space NOT YET IMPLEMENTED).
 !
@@ -1405,6 +1412,12 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 	logical		force_sigcc, success
 	type(event_main):: main
 	type(event)::	vertex, vertex0, recon
+c
+	real*8 allow_scat_in_coll,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll 
+	real*8 prob_abs
+        real energy_loss_coll
+	common / coll_pass_thru / energy_loss_coll,allow_scat_in_coll	
+     >   ,x_at_coll,y_at_coll,xp_at_coll,yp_at_coll,prob_abs
 
 !-----------------------------------------------------------------------
 ! Calculate everything left in the /main/ structure that hasn't been

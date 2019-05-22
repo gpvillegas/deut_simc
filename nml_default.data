@@ -23,6 +23,7 @@
     doing_bound = F
     use_sf = F
     sf_version = 0
+    set_allow_scat_in_coll = 0
     transparency = 1
  /
 

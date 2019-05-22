@@ -76,6 +76,7 @@
 	logical correct_Eloss, standard_Eloss, correct_raster,do_fermi
 	logical using_tgt_field
 	integer*4 electron_arm, hadron_arm, use_first_cer, col_flag
+	real*8 set_allow_scat_in_coll
 	real*8 transparency
 
 
@@ -84,7 +85,7 @@
      >    normfac, wtcontribute, dE_edge_test, Egamma_gen_max,pt_b_param,
      >    sigc_kin_min,sigc_kin_max,sigc_kin_ind,targ_Bangle, targ_Bphi, targ_pol,
      >    drift_to_cal,sign_hadron,sigc_flag,sigc_nbin,
-     >    gen, spec, cuts, edge, VERTEXedge, SPedge,
+     >    gen, spec, cuts, edge, VERTEXedge,set_allow_scat_in_coll, SPedge,
      >    slop, EXPER, mc_smear, mc_smear_addl, recon_mc_smear_addl, debug, nevent, ntried, ngen,
      >    deForest_flag, Nntu, ncontribute, npasscuts, ncontribute_no_rad_proton,
      >    spect_mode, phsp_mode, base,
