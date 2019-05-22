@@ -1499,7 +1499,6 @@ C DJG moved this to the last part of generate!!!
 
 	  m2 = Mh2
 	  pathlen = 0.0
-	  write(*,*) ' hadron_arm = ',hadron_arm
 	  if (hadron_arm.eq.1) then
 	    call mc_hms(spec%p%P, spec%p%theta, delta_P_arm, x_P_arm,
      >		y_P_arm, z_P_arm, dx_P_arm, dy_P_arm, xfp, dxfp, yfp, dyfp,
