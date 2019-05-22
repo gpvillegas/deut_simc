@@ -271,7 +271,11 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(73) = vertex%PMPAR                       !  p_miss_par (vertex)                         
 	  ntu(74) = vertex%P%P                         !  p_f (vertex)                         
 	  ntu(75) = vertex%P%E                         !  Ep energy (vertex)                         
-	  ntu(76) = vertex%e%E                         !  final electron energy (vertex)                         
+	  ntu(76) = vertex%e%E                         !  final electron energy (vertex) 
+	   ntu(77) =x_at_coll
+	   ntu(78) =y_at_coll
+	   ntu(79) =energy_loss_coll
+	   ntu(80) =prob_abs
 	endif
 
 ! write output

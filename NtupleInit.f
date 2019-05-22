@@ -375,7 +375,14 @@
 	  NtupleTag(m) = 'Ep_v' 	!  75 Ep energy (vertex)                         
 	  m = m+1	 
 	  NtupleTag(m) = 'Ef_v' 	!  76 final electron  energy (vertex)                         
-
+	  m = m+1	 
+	  NtupleTag(m) = 'xcoll' 	!  
+	  m = m+1	 
+	  NtupleTag(m) = 'ycoll' 	!  
+	  m = m+1	 
+	  NtupleTag(m) = 'ecoll' 	!  
+	  m = m+1	 
+	  NtupleTag(m) = 'probabs' 	!  
 	endif
 
 !	else		!used to be the if (doing_phsp) option.
