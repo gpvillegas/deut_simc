@@ -250,7 +250,7 @@ c
         	    hit_coll = .true.
 	       endif
                if ( hit_coll) then
-	       xn_abs = (57.49 - 6.0838*p+0.5627*p*p)*(184.)**(.7) ! fit to pp crosssection times A^.7
+	       xn_abs = (57.49 - 6.0838*p/1000.+0.5627*p*p/1000./1000.)*(184.)**(.7) ! fit to pp crosssection times A^.7
 	       epart= sqrt(p*p+m2)
 	       mpart=sqrt(m2)
                z_diff = z_exit - z_entr
@@ -260,6 +260,7 @@ c
                dcoll= sqrt(ycoll*ycoll + x_diff*x_diff) 
                call enerloss_new(dcoll,17.0d00,74.0d00,184.00d00,epart,mpart,1,Eloss)
 	       prob_abs = 0.90*exp(-0.0006/184.*xn_abs*dcoll*17.0) ! determine 0.90 factor from elastic data.
+c	       write(*,*) " prob = ",prob_abs,p,xn_abs,dcoll
 	       energy_loss_coll = eloss
 	       radw=dcoll/.35
                call musc_ext(m2,p,radw,dcoll,dydzs,dxdzs,ys,xs)
