@@ -5,7 +5,7 @@
 	include 'hbook.inc'
 	include 'simulate.inc'
 
-	real*4	ntu(80)
+	real*4	ntu(90)
 	type(event_main):: main
 	type(event):: vertex, orig, recon
 
@@ -272,10 +272,17 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(74) = vertex%P%P                         !  p_f (vertex)                         
 	  ntu(75) = vertex%P%E                         !  Ep energy (vertex)                         
 	  ntu(76) = vertex%e%E                         !  final electron energy (vertex) 
-	   ntu(77) =x_at_coll
-	   ntu(78) =y_at_coll
-	   ntu(79) =energy_loss_coll
-	   ntu(80) =prob_abs
+	  !C.Y. Added vertex x'tar/y'tar
+	  !necessary to obtain vertex kin. angles 
+	  !(th_nq, th_q, th_pq, etc.)
+	  ntu(77) = vertex%e%xptar                     !  electron x'tar (vertex) 
+	  ntu(78) = vertex%e%yptar                     !  electron y'tar (vertex)
+	  ntu(79) = vertex%p%xptar                     !  hadron x'tar   (vertex)
+	  ntu(80) = vertex%p%yptar                     !  hadron y'tar   (vertex)
+	  ntu(81) =x_at_coll
+	  ntu(82) =y_at_coll
+	  ntu(83) =energy_loss_coll
+	  ntu(84) =prob_abs
 	endif
 
 ! write output
