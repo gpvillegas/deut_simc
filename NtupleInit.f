@@ -14,7 +14,7 @@
 	parameter(name = 'SNT')
 	parameter(title = 'SIMTUPLE')
 	
-	data NtupleTag /80*' '/
+	data NtupleTag /90*' '/
 
 	NtupleID = defaultID
 	id = NtupleID
@@ -374,8 +374,23 @@
 	  m = m+1	 
 	  NtupleTag(m) = 'Ep_v' 	!  75 Ep energy (vertex)                         
 	  m = m+1	 
-	  NtupleTag(m) = 'Ef_v' 	!  76 final electron  energy (vertex)                         
-
+	  NtupleTag(m) = 'Ef_v' 	!  76 final electron  energy (vertex)       
+	  m = m+1	 
+	  NtupleTag(m) = 'e_xptar_v' 	!  77  electron x'tar  (vertex)       
+	  m = m+1	 
+	  NtupleTag(m) = 'e_yptar_v' 	!  78  electron y'tar  (vertex)       
+	  m = m+1	 
+	  NtupleTag(m) = 'h_xptar_v' 	!  79  hadron x'tar  (vertex)       
+	  m = m+1	 
+	  NtupleTag(m) = 'h_yptar_v' 	!  80  hadron y'tar  (vertex)        
+	  m = m+1	 
+	  NtupleTag(m) = 'xcoll' 	!  81
+	  m = m+1	 
+	  NtupleTag(m) = 'ycoll' 	!  82
+	  m = m+1	 
+	  NtupleTag(m) = 'ecoll' 	!  83
+	  m = m+1	 
+	  NtupleTag(m) = 'probabs' 	!  84
 	endif
 
 !	else		!used to be the if (doing_phsp) option.

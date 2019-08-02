@@ -21,7 +21,7 @@ C Ntuple ID stuff
       	character*132 	NtupleDirectory
 	character*16    NtupleName
 	integer*4       NtupleID,NtupleIO,NtupleSize
-	character*30 NtupleTag(80)
+	character*30 NtupleTag(90)
 
   
 	common /NtupleInfo/ NtupleID, NtupleDirectory, NtupleName,
