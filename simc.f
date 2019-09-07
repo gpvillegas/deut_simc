@@ -38,6 +38,8 @@
 	real*8 one
 	parameter (one=1.0d0)	!double precision 1 for subroutine calls
 
+	integer*4 random_seed
+	real*4 ref_time
 	real*8 grnd
 	real*8 ang_targ_earm,ang_targ_parm
 c mkj ( used in mc_hms.f)
@@ -106,7 +108,9 @@ c
 	if (debug(4)) write(6,*)'sim: at 3'
 
 ! ... initialize the random number generator and number of attempts
-
+	ref_time = 0.0
+	random_seed=int(secnds(ref_time)) !initilialize rand. seed with time of day (in sec) since midnight
+	call sgrnd(random_seed)
 	r = grnd()
 	ntried = 0
 c
