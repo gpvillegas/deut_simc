@@ -15,15 +15,14 @@
     doing_pion = F
     which_pion = 0
     doing_delta = F
-    doing_semi = F
-    doing_hplus = T
+     doing_semi = F
+     doing_hplus = T
     doing_rho = F
     doing_decay = F
     ctau = 0
     doing_bound = F
     use_sf = F
     sf_version = 0
-    set_allow_scat_in_coll = 0
     transparency = 1
  /
 
@@ -58,7 +57,10 @@
     spec%e%P = 0.
     spec%e%theta = 0.
     spec%e%sig_musc = 1.1e-6, 1.2e-6
-    spec%e%sig_smear = 1.e-8, 1.e-8, 1.e-8, 1.e-8
+    spec%e%sig_semar = 1.e-8, 1.e-8, 1.e-8, 1.e-8
+    spec%e%shift%theta  = 0.
+    spec%e%shift%phi  = 0.
+    spec%e%shift%p_mom  = 0.
  /
  =?
 
@@ -66,7 +68,10 @@
     spec%p%P = 0.
     spec%p%theta = 0.
     spec%p%sig_musc = 1.1e-6, 1.2e-6
-    spec%p%sig_smear = 1.e-8, 1.e-8, 1.e-8, 1.e-8
+    spec%p%sig_semar = 1.e-8, 1.e-8, 1.e-8, 1.e-8
+    spec%p%shift%theta  = 0.
+    spec%p%shift%phi  = 0.
+    spec%p%shift%p_mom  = 0.
  /
  =?
 

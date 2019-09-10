@@ -177,12 +177,25 @@
 	      real*8	x,y,z,xptar,yptar
       end type
 
+! shift in variables for testing mismatch between event generation and analysis WB 2019
+      type spec_shift
+              sequence
+	      real*8	theta, phi, p_mom
+      end type
+
+      type spec_shift2
+              sequence
+	      real*8	theta, phi, p_mom
+      end type
+
+
        type spectrometer
            sequence
            real*8	P,theta,cos_th,sin_th,phi
 	   real*8       sig_musc(2)
-	   real*8       sig_smear(4)		
+	   real*8       sig_smear(4)
 	   type(spec_offset)::offset
+	   type(spec_shift)::shift
        end type
 
        type spectrometer2
@@ -191,6 +204,7 @@
 	   real*8       sig_musc(2)
 	   real*8       sig_smear(4)
 	   type(spec_offset2)::offset
+	   type(spec_shift2)::shift
        end type
 
 

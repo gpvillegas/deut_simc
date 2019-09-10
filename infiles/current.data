@@ -9,7 +9,7 @@
 
  =?
  &EXPERIMENT
-     ngen  =  2000			!  POS: # of successe
+     ngen  =  20000			!  POS: # of successe
      EXPER%charge  =   1.0		!  total charge (mC)
      doing_phsp  =  F		!  (T = TRUE)	- If all of the doing_* are
      doing_kaon  =  F		!  (T = TRUE)   false, then doing (e,e'p).
@@ -22,13 +22,21 @@
  =?
  &KINEMATICS_MAIN
      Ebeam  =  5008.55                       !  (MeV)
-     dEbeam  =  0.0015                                   !  beam energy variation (%)
-     electron_arm  =  5                                !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+     dEbeam  =  0.00                                   !  beam energy variation (%)
+     electron_arm  =  4                                !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
      hadron_arm  =  3                                  !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+
      spec%e%P  =   2750.659                    !  e arm central momentum (MeV/c)
      spec%e%theta  =   29.23505                !  e arm angle setting (degrees)
+     spec%e%shift%p_mom  =   1.                !  shift e-momentum for reconstruction
+     spec%e%shift%theta  =   0.001             !  shift theta_e for reconstruction
+     spec%e%shift%phi  =   0.                  !  shift phi_e for reconstruction
+
      spec%p%P  =   3031.415                    !  p arm central momentum (MeV/c)
      spec%p%theta  =     30.591                !  p arm angle setting (degrees)
+     spec%p%shift%p_mom  =   1.                !  shift p-momentum for reconstruction
+     spec%p%shift%theta  =   0.001             !  shift theta_p for reconstruction
+     spec%p%shift%phi  =   0.                  !  shift phi_p for reconstruction
 / 
 
  ?=
