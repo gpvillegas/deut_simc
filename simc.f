@@ -1851,7 +1851,6 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	call physics_angles(spec%e%theta + spec%e%shift%theta,spec%e%phi + spec%e%shift%phi,dx_tmp,
      >		dy_tmp,recon%e%theta,recon%e%phi)
 
-
 ! ... correct for energy loss and correct for Coulomb deceleration
 ! WB need to calculate the proper vertex z-position
 
