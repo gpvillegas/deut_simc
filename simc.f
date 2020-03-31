@@ -1592,7 +1592,7 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	recon%p%yptar = main%RECON%p%yptar
 	recon%p%xptar = main%RECON%p%xptar
 	recon%p%z = main%RECON%p%z
-! WB 2019 add shift 
+! WB 2019 add shift
 	recon%p%P = spec%p%P*(1.+recon%p%delta/100.) + spec%p%shift%p_mom
 	recon%p%E = sqrt(recon%p%P**2 + Mh2)
 	dx_tmp = recon%p%xptar + spec%p%offset%xptar
