@@ -38,6 +38,8 @@
 	real*8 one
 	parameter (one=1.0d0)	!double precision 1 for subroutine calls
 
+	integer*4 random_seed
+	real*4 ref_time
 	real*8 grnd
 	real*8 ang_targ_earm,ang_targ_parm
 c mkj ( used in mc_hms.f)
@@ -106,7 +108,9 @@ c
 	if (debug(4)) write(6,*)'sim: at 3'
 
 ! ... initialize the random number generator and number of attempts
-
+	ref_time = 0.0
+	random_seed=int(secnds(ref_time)) !initilialize rand. seed with time of day (in sec) since midnight
+	call sgrnd(random_seed)
 	r = grnd()
 	ntried = 0
 c
@@ -1588,11 +1592,13 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	recon%p%yptar = main%RECON%p%yptar
 	recon%p%xptar = main%RECON%p%xptar
 	recon%p%z = main%RECON%p%z
-	recon%p%P = spec%p%P*(1.+recon%p%delta/100.)
+! WB 2019 add shift 
+	recon%p%P = spec%p%P*(1.+recon%p%delta/100.) + spec%p%shift%p_mom
 	recon%p%E = sqrt(recon%p%P**2 + Mh2)
 	dx_tmp = recon%p%xptar + spec%p%offset%xptar
 	dy_tmp = recon%p%yptar + spec%p%offset%yptar
-	call physics_angles(spec%p%theta,spec%p%phi,dx_tmp,
+! add spectro shifts WB 2019
+	call physics_angles(spec%p%theta + spec%p%shift%theta,spec%p%phi + spec%p%shift%phi,dx_tmp,
      >           dy_tmp,recon%p%theta,recon%p%phi)
 ! ... correct for energy loss - use most probable (last flag = 4)
 ! WB here one should claculate the proper location of the vertex from reconstructed spectrometer
@@ -1835,15 +1841,15 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	recon%e%yptar = main%RECON%e%yptar
 	recon%e%xptar = main%RECON%e%xptar
 	recon%e%z = main%RECON%e%z
-	recon%e%P = spec%e%P*(1.+recon%e%delta/100.)
+	recon%e%P = spec%e%P*(1.+recon%e%delta/100.) + spec%e%shift%p_mom
 	recon%e%E = recon%e%P
 
 	dx_tmp = recon%e%xptar + spec%e%offset%xptar
         dy_tmp = recon%e%yptar + spec%e%offset%yptar
 
-	call physics_angles(spec%e%theta,spec%e%phi,dx_tmp,
+! WB 2019 add shifts for reconstruction		
+	call physics_angles(spec%e%theta + spec%e%shift%theta,spec%e%phi + spec%e%shift%phi,dx_tmp,
      >		dy_tmp,recon%e%theta,recon%e%phi)
-
 
 ! ... correct for energy loss and correct for Coulomb deceleration
 ! WB need to calculate the proper vertex z-position
