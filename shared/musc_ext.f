@@ -1,4 +1,6 @@
-	subroutine musc_ext(m2,p,rad_len,x_len,dth,dph,y,x)
+	subroutine musc_ext(m2,p,rad_len,x_len,dph,dth,y,x)
+
+c	subroutine musc_ext(m2,p,rad_len,x_len,dth,dph,y,x)  C.Y. 05/15/21: MK Jones fixed mistake (inverted dth, dph) on 03/31/21
 C+_____________________________________________________________________
 !
 ! MUSC - Simulate multiple scattering of any particle.

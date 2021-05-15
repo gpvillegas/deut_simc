@@ -88,8 +88,10 @@ c collimator
 
 	parameter (h_entr = 8.5)
 	parameter (v_entr = 12.5)
-	parameter (h_exit = 8.5)
-	parameter (v_exit = 12.5)
+c	parameter (h_exit = 8.5)  
+c	parameter (v_exit = 12.5) 
+	parameter (h_exit = 8.65) !CY 05/15/21: Updates from MKJones 12/19/20
+	parameter (v_exit = 12.85)!CY 05/15/21: Updates from MKJones 12/19/20
 	parameter (x_off=+0.00)
 	parameter (y_off=+0.00)
 
@@ -135,11 +137,14 @@ c	parameter(zd_fp    = 327.00)
         parameter(zd_hbin  = 118.39)
 c 2011	parameter(zd_hbmen = 20.06)
 	parameter(zd_hbmen = 17.61)
-        parameter(zd_hbmex = 75.134)
+c        parameter(zd_hbmex = 75.134) 
+	parameter(zd_hbmex = 80.0)
 c 2011        parameter(zd_hbout = 20.06)
         parameter(zd_hbout = 17.61) ! 2017
 c	parameter (z_entr = 52.04) ! 6.35 cm in front of Q1
-	parameter (z_entr = 22.4) ! 80 cm from center of HB
+c	parameter (z_entr = 22.4) ! 80 cm from center of HB
+	parameter (z_entr = 25.189) ! 82.789 cm from center of HB | !CY 05/15/21: Updates from MKJones 12/19/20
+
 	parameter (z_thick =6.35) !6.35 cm thick
         parameter(zd_q1in  = 58.39)
 c 2011        parameter(zd_q1men = 28.05)
@@ -477,15 +482,19 @@ c	   call project(xt,yt,zdrift,decay_flag,dflag,m2,p,pathlen) !project
            xt=xt + zdrift*dxdzs
            yt=yt + zdrift*dydzs
 c	   call project(xt,yt,zdrift,decay_flag,dflag,m2,p,pathlen) !project 
-	   if (abs(yt-y_off).gt.(h_exit+0.8)) then
+c	   if (abs(yt-y_off).gt.(h_exit+0.8)) then
+           if (abs(yt-y_off).gt.(h_exit)) then  !CY 05/15/21: Updates from MKJones 12/19/20
+
 	      shmsSTOP_slit_hor = shmsSTOP_slit_hor + 1
 	      goto 500
 	   endif
-	   if (abs(xt-x_off).gt.(v_exit+0.8)) then
+c          if (abs(xt-x_off).gt.(v_exit+0.8)) then
+	   if (abs(xt-x_off).gt.(v_exit)) then   !CY 05/15/21: Updates from MKJones 12/19/20
 	      shmsSTOP_slit_vert = shmsSTOP_slit_vert + 1
 	      goto 500
 	   endif
-	   if (abs(xt-x_off).gt. ((-v_exit-0.8)/(h_exit+0.8)*abs(yt-y_off)+3*(v_exit+0.8)/2)) then
+c	   if (abs(xt-x_off).gt. ((-v_exit-0.8)/(h_exit+0.8)*abs(yt-y_off)+3*(v_exit+0.8)/2)) then
+	   if (abs(xt-x_off).gt. ((-v_exit)/(h_exit)*abs(yt-y_off)+3*(v_exit)/2)) then   !CY 05/15/21: Updates from MKJones 12/19/20
 	      shmsSTOP_slit_oct = shmsSTOP_slit_oct + 1
 	      goto 500
      	   endif
@@ -774,7 +783,8 @@ c	   y_d_men=yt
 	   xt=xs
 	   yt=ys
 	   call rotate_haxis(6.9,xt,yt)
-	   xt = xt + 8.1
+	   xt = xt + 8.05
+c          xt = xt + 8.1  C.Y. 05/15/21 : mistake in dipole aperture offsets (found by Aruni in simc_gfortran) 
 c	   x_d_m1=xt
 c	   y_d_m1=yt
 	   if ((xt*xt + yt*yt).gt.r_D1*r_D1) then
@@ -879,7 +889,8 @@ c	   y_d_m6=yt
 	   xt=xs
 	   yt=ys
 	   call rotate_haxis(-6.9,xt,yt)
-	   xt = xt + 8.5
+	   xt = xt + 8.05
+c	   xt = xt + 8.5  C.Y. 05/15/21 : mistake in dipole aperture offsets (found by Aruni in simc_gfortran) 
 c	   x_d_m7=xt
 c	   y_d_m7=yt
 	   if ((xt*xt + yt*yt).gt.r_D1*r_D1) then
@@ -917,7 +928,8 @@ c	   y_d_mex=yt
            xt=xs
            yt=ys
            call rotate_haxis(-9.20,xt,yt)
-	   xt = xt - 6.9
+	   xt = xt - 6.88
+c	   xt = xt - 6.9 C.Y. 05/15/21 : mistake in dipole aperture offsets (found by Aruni in simc_gfortran) 
 c	   x_d_out=xt
 c	   y_d_out=yt
 	   if ((xt*xt + yt*yt).gt.r_D1*r_D1) then
