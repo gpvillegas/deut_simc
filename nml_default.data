@@ -15,8 +15,8 @@
     doing_pion = F
     which_pion = 0
     doing_delta = F
-     doing_semi = F
-     doing_hplus = T
+    doing_semi = F
+    doing_hplus = T
     doing_rho = F
     doing_decay = F
     ctau = 0

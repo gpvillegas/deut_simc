@@ -585,17 +585,18 @@ C DJG:
 	    endif
 ! ============================================================
 	  else if (nint(targ%A).eq.4) then
-	    tmpfile='benharsf_4.dat'
+	     write(6,*) '---> Reading He4 spectral function from benharsf_4.dat . . . ' 
+	     tmpfile='benharsf_4.dat'
 	  else if (nint(targ%A).eq.12) then
-	    tmpfile='benharsf_12.dat'
+	     tmpfile='benharsf_12.dat'
 	  else if (nint(targ%A).eq.56) then
-	    tmpfile='benharsf_56.dat'
+	     tmpfile='benharsf_56.dat'
 	  else if (nint(targ%A).eq.197) then
-	    tmpfile='benharsf_197.dat'
+	     tmpfile='benharsf_197.dat'
 	  else
-	    write(6,*) 'No spectral function for A = ',targ%A
-	    write(6,*) 'Defaulting to Carbon S.F.'
-	    tmpfile='benharsf_12.dat'
+	     write(6,*) 'No spectral function for A = ',targ%A
+	     write(6,*) 'Defaulting to Carbon S.F.'
+	     tmpfile='benharsf_12.dat'
 	  endif
 
 ! *****************************************************************************
