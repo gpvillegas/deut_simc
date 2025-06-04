@@ -11,7 +11,7 @@
 !	include 'simulate_init.inc'
 	include 'simulate.inc'
 	include 'g_dump_all_events.inc'
-	include 'histograms_init.inc'
+	include 'histograms.inc'
 	include 'radc.inc'
 	include 'hbook.inc'
 	include 'sos/struct_sos.inc'

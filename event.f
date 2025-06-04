@@ -74,19 +74,19 @@
 
 ! Update the "slop limits" records
 ! ... MC slops
-	call update_range(main%RECON%e%delta-main%SP%e%delta,slop%MC%e%delta)
-	call update_range(main%RECON%e%yptar-main%SP%e%yptar,slop%MC%e%yptar)
-	call update_range(main%RECON%e%xptar-main%SP%e%xptar,slop%MC%e%xptar)
-	call update_range(main%RECON%p%delta-main%SP%p%delta,slop%MC%p%delta)
-	call update_range(main%RECON%p%yptar-main%SP%p%yptar,slop%MC%p%yptar)
-	call update_range(main%RECON%p%xptar-main%SP%p%xptar,slop%MC%p%xptar)
+	call update_slop_item(main%RECON%e%delta-main%SP%e%delta,slop%MC%e%delta)
+	call update_slop_item(main%RECON%e%yptar-main%SP%e%yptar,slop%MC%e%yptar)
+	call update_slop_item(main%RECON%e%xptar-main%SP%e%xptar,slop%MC%e%xptar)
+	call update_slop_item(main%RECON%p%delta-main%SP%p%delta,slop%MC%p%delta)
+	call update_slop_item(main%RECON%p%yptar-main%SP%p%yptar,slop%MC%p%yptar)
+	call update_slop_item(main%RECON%p%xptar-main%SP%p%xptar,slop%MC%p%xptar)
 
 ! %.. total slops
 ! ........ that tricky shift again, slops accounted for by the shift not
 ! ........ included in slop.total.Em.
-	call update_range(recon%Em-(orig%Em-main%Ein_shift+main%Ee_shift),
+	call update_slop_item(recon%Em-(orig%Em-main%Ein_shift+main%Ee_shift),
      >		slop%total%Em)
-	call update_range(abs(recon%Pm)-abs(orig%Pm), slop%total%Pm)
+	call update_slop_item(abs(recon%Pm)-abs(orig%Pm), slop%total%Pm)
 
 	return
 	end
@@ -101,6 +101,19 @@
 
 	range%lo = min(range%lo, val)
 	range%hi = max(range%hi, val)
+
+	return
+	end
+!-------------------------------------------------------------------
+
+	subroutine update_slop_item(val,s_item)
+
+	include 'structures.inc'
+	type(slop_item):: s_item
+	real*8	val
+
+	s_item%lo = min(s_item%lo, val)
+	s_item%hi = max(s_item%hi, val)
 
 	return
 	end
@@ -1406,7 +1419,7 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 
 	integer		i, iPm1
 	real*8		a, b, r, frac, peepi, peeK, peedelta, peerho, peepiX
-	real*8		survivalprob, semi_dilution, LagetXsec
+	real*8		survivalprob, semi_dilution, LagetXsec, MSxsec
 	real*8		weight, width, sigep, deForest, tgtweight
 	real*8          Pm_val, Em_val
 	logical		force_sigcc, success
@@ -1524,6 +1537,11 @@ c
 	      main%sig_recon = LagetXsec(recon)		
 	      main%sigcc = deForest(vertex)		
 	      main%sigcc_recon = deForest(recon)
+	   elseif (theory_par%model .eq. 'MS_CD-Bonn') then
+	      main%sig = MSxsec(vertex)		
+	      main%sig_recon = MSxsec(recon)		
+	      main%sigcc = deForest(vertex)		
+	      main%sigcc_recon = deForest(recon)  
 	   else
 	      main%sigcc = deForest(vertex)		
 	      main%sigcc_recon = deForest(recon)
