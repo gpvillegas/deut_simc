@@ -17,3 +17,4 @@ simc
 fmake_tree
 make_tree
 .DS_Store
+*.mod
