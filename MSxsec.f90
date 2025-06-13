@@ -24,7 +24,9 @@ function MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq) result (sigma_eep)
   real :: v_l, v_t, v_lt, v_tt, s_fact
 
   real, parameter :: pi = 3.141592654
-  
+
+  ! write(48, *) e_i, q2_loc, p_r_loc, theta_r_loc, phi_pq
+
   ! assign variables to the event variable
   phi_r = pi - phi_pq
 
@@ -36,9 +38,16 @@ function MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq) result (sigma_eep)
   ! get interpolated response functions
   call resp_interp(p_r_loc, q2_loc, theta_r_loc/dtr , &
        Rl_loc, Rt_loc, Rlt_loc, Rtt_loc, int_status) 
+  !print*, 'int_status = ', int_status
   
   !print*, 'Rl, Rt, Rlt, Rtt = ', Rl_loc, Rt_loc, Rlt_loc, Rtt_loc
-   print*, 'int_status  = ', int_status
+  if (int_status .ne. 0) then
+     print*, 'int_status  = ', int_status
+     print*, 'p_r_loc, q2_loc, theta_r_loc/dtr :', p_r_loc, q2_loc, theta_r_loc/dtr
+     write(48, *) p_r_loc, q2_loc, theta_r_loc/dtr
+     sigma_eep = -1.
+     return
+  endif
 
   ! get kinematics for cross section
   !print*, 'enter Ei, theta_e, phi_r :'
@@ -73,7 +82,7 @@ subroutine init_MS(grid_dir, do_fsi, save_grid, wf_model)
 
   use response_functions_mod
   implicit none
-  character*100 :: grid_dir
+  character*(*) :: grid_dir
   integer :: do_fsi, save_grid, read_status
   integer :: wf_model ! wave function model selector 1 = Paris , 2 = AV18, 3 = CD-Bonn
      
@@ -82,7 +91,7 @@ subroutine init_MS(grid_dir, do_fsi, save_grid, wf_model)
      if (do_fsi .eq. 1) then
         read_status = resp_initialize('deut_MS/CD-Bonn/FSI/strfun_grid_CD-Bonn_FSI.data')
      else 
-        read_status = resp_initialize('deut_MS/CD-Bonn/PWIA/strfun_grid_CD-Bonn_PWIA.data')
+        read_status = resp_initialize('deut_MS/CD-Bonn/PWIA/strfun_grid_1_2_60_50_60.data')
      endif
   endif
 

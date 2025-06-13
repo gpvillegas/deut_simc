@@ -256,7 +256,7 @@ contains
          minval(numdat(1:n_x1, 1:n_x2)), ' and ', maxval(numdat(1:n_x1, 1:n_x2))
     write (6,'(1x,a,i5)') ' number of x2 Values  : ', n_x2
     write (6,'(1x,a,i5)') ' number of x1 values  : ', n_x1
-    write (6,'(1x,a,i5)') ' total number of grid points  : ',  numdat_tot
+    write (6,'(1x,a,i10)') ' total number of grid points  : ',  numdat_tot
     
     
     

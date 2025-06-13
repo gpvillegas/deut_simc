@@ -17,3 +17,9 @@ simc
 fmake_tree
 make_tree
 .DS_Store
+check_bounds.py
+deut_MS
+fort.47
+fort.48
+infiles
+simc_parameter_dump.dat
