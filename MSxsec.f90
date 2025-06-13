@@ -75,12 +75,27 @@ subroutine init_MS(grid_dir, do_fsi, save_grid, wf_model)
   implicit none
   character*100 :: grid_dir
   integer :: do_fsi, save_grid, read_status
-  integer :: wf_model ! wave function model selector 1 = Paris , 2 = AV18, 3 = CD-Bonn
+  integer :: wf_model ! wave function model selector 1 = Paris , 2 = V18, 3 = CD-Bonn
      
   ! load grid an initialize interpolation
-  if (wf_model .eq. 3) then          
+  ! Paris wave function selector
+  if (wf_model .eq. 1) then
      if (do_fsi .eq. 1) then
         read_status = resp_initialize('deut_MS/CD-Bonn/FSI/strfun_grid_CD-Bonn_FSI.data')
+     else 
+        read_status = resp_initialize('deut_MS/V18/PWIA/strfun_grid_1_2_60_50_60.data')
+     endif
+  ! V18   
+  elseif (wf_model .eq. 2) then
+     if (do_fsi .eq. 1) then
+        read_status = resp_initialize('deut_MS/CD-Bonn/FSI/strfun_grid_CD-Bonn_FSI.data')
+     else 
+        read_status = resp_initialize('deut_MS/V18/PWIA/strfun_grid_1_2_60_50_60.data')
+     endif
+  ! CD-Bonn   
+  elseif (wf_model .eq. 3) then          
+     if (do_fsi .eq. 1) then
+        read_status = resp_initialize('deut_MS/CD-Bonn/FSI/strfun_grid_12_3_60_50_60.data')
      else 
         read_status = resp_initialize('deut_MS/CD-Bonn/PWIA/strfun_grid_CD-Bonn_PWIA.data')
      endif

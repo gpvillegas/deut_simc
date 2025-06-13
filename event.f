@@ -1420,6 +1420,7 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 	integer		i, iPm1
 	real*8		a, b, r, frac, peepi, peeK, peedelta, peerho, peepiX
 	real*8		survivalprob, semi_dilution, LagetXsec, MSxsec
+	logical 	Laget, MSParis, MSV18, MSCDBonn
 	real*8		weight, width, sigep, deForest, tgtweight
 	real*8          Pm_val, Em_val
 	logical		force_sigcc, success
@@ -1532,12 +1533,17 @@ c
 	  main%sigcc_recon = sigep(recon)
 
 	elseif (doing_deuterium.or.doing_heavy) then
-	   if (theory_par%model .eq. 'LAGET_DEUT') then
+		Laget = theory_par%model .eq. 'LAGET_DEUT'
+		MSParis = theory_par%model .eq. 'MS_Paris'
+		MSV18 = theory_par%model .eq. 'MS_V18'
+		MSCDBonn = theory_par%model .eq. 'MS_V18'
+
+	   if (Laget) then
 	      main%sig = LagetXsec(vertex)		
 	      main%sig_recon = LagetXsec(recon)		
 	      main%sigcc = deForest(vertex)		
 	      main%sigcc_recon = deForest(recon)
-	   elseif (theory_par%model .eq. 'MS_CD-Bonn') then
+	   else if (MSParis .or. MSV18 .or. MSCDBonn) then
 	      main%sig = MSxsec(vertex)		
 	      main%sig_recon = MSxsec(recon)		
 	      main%sigcc = deForest(vertex)		

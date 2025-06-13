@@ -857,14 +857,18 @@ c	exponentiate = use_expon
 	integer m,n,iok, do_fsi, interpol, iw
 	logical save_grid, use_binary_file
 	logical success
+	logical Laget, MSParis, MSV18, MSCDBonn
 	
 ! ... open the file
+	Laget = theory_par%model .eq. 'LAGET_DEUT'
+	MSParis = theory_par%model .eq. 'MS_Paris'
+	MSV18 = theory_par%model .eq. 'MS_V18'
+	MSCDBonn = theory_par%model .eq. 'MS_CD-Bonn'
+
 	if ( nint(targ%A) .eq. 2) then
 	   ! various deuteron models, here for laget model
-	   if (theory_par%model .eq. 'LAGET_DEUT') then
-	      doing_deuterium = .TRUE.
-	   elseif (theory_par%model .eq. 'MS_CD-Bonn') then
-	      doing_deuterium = .TRUE.
+	   if (Laget .or. MSParis .or. MSV18 .or. MSCDBonn) then
+	      doing_deuterium = .TRUE.    
 	   endif
 	   ! this is redundant for the laget model and is the default model
 	   theory_file='h2.theory'
@@ -929,7 +933,7 @@ c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
 
 ! ... are we doing deuterium? (i.e. only using a 1D spectral function)
 	doing_deuterium = (nrhoPm.eq.1 .and. E_Fermi.lt.1.0) .or.
-     > 	   (theory_par%model .eq. 'LAGET_DEUT') .or. (theory_par%model .eq. 'MS_CD-Bonn')
+     > 	   (Laget .or. MSParis .or. MSV18 .or. MSCDBonn)
 
 ! ... renormalize the momentum distributions
 	do m=1, nrhoPm
@@ -960,10 +964,19 @@ c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
      >                      save_grid, use_binary_file)
 	endif
 	      
-! for MS CD-Bonn model of d(e,e'p)n
-	if (theory_par%model .eq. 'MS_CD-Bonn') then
+! for MS models of d(e,e'p)n
+	if (MSParis .or. MSV18 .or. MSCDBonn) then
 		! initialize MS model
-		iw = 3 							  !! 1 = Paris, 2 = V18, 3 = CD-Bonn, 4 = AV18sb
+		!! 1 = Paris, 2 = V18, 3 = CD-Bonn, 4 = AV18sb
+
+		if (MSParis) then
+			iw = 1
+		else if (MSV18) then
+			iw = 2
+		else if (MSCDBonn) then
+			iw = 3
+		endif
+
 		do_fsi =  theory_par%parameter(1) !! 0 = PWIA, 1 = FSI
 		save_grid =  .False.
 		call init_MS(theory_par%data_file, do_fsi, save_grid, iw)

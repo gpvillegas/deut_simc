@@ -72,7 +72,7 @@ ifeq ($(MYOS),Linux)
 # FFLAGSA=-g -O0 -W -ffixed-line-length-132 -fno-automatic -fdefault-real-8 -fdefault-double-8  -finit-local-zero -fbounds-check
 #
 # type mismatch troubleshooting: added flags -fallow-argument-mismatch -std=legacy --gpv
-  FFLAGSA=-O -W -ffixed-line-length-132 -fno-automatic -fdefault-real-8 -fdefault-double-8  -finit-local-zero -fallow-argument-mismatch -std=legacy -fno-align-commons -g -fbounds-check
+  FFLAGSA=-O -W -ffixed-line-length-132 -fno-automatic -fdefault-real-8 -fdefault-double-8  -finit-local-zero -fallow-argument-mismatch -std=legacy -fno-align-commons
 #
   #FFLAGSA=-O -W -ffixed-line-length-132 -fno-automatic -fdefault-real-8 -fdefault-double-8 -finit-local-zero -fno-align-commons -ffixed-line-length-none -g -fbounds-check
   INCLUDES=-I.
