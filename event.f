@@ -1419,7 +1419,7 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 
 	integer		i, iPm1
 	real*8		a, b, r, frac, peepi, peeK, peedelta, peerho, peepiX
-	real*8		survivalprob, semi_dilution, LagetXsec, MSxsec
+	real*8		survivalprob, semi_dilution, LagetXsec, MSxsec_f
 	logical 	Laget, MSParis, MSV18, MSCDBonn
 	real*8		weight, width, sigep, deForest, tgtweight
 	real*8          Pm_val, Em_val
@@ -1544,8 +1544,8 @@ c
 	      main%sigcc = deForest(vertex)		
 	      main%sigcc_recon = deForest(recon)
 	   else if (MSParis .or. MSV18 .or. MSCDBonn) then
-	      main%sig = MSxsec(vertex)		
-	      main%sig_recon = MSxsec(recon)		
+	      main%sig = MSxsec_f(vertex)		
+	      main%sig_recon = MSxsec_f(recon)		
 	      main%sigcc = deForest(vertex)		
 	      main%sigcc_recon = deForest(recon)  
 	   else
