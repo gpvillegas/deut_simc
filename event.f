@@ -1536,7 +1536,8 @@ c
 		Laget = theory_par%model .eq. 'LAGET_DEUT'
 		MSParis = theory_par%model .eq. 'MS_Paris'
 		MSV18 = theory_par%model .eq. 'MS_V18'
-		MSCDBonn = theory_par%model .eq. 'MS_V18'
+		MSCDBonn = theory_par%model .eq. 'MS_CD-Bonn'
+		!print*, 'MSParis, MSV18, MSCDBonn', MSParis, MSV18, MSCDBonn
 
 	   if (Laget) then
 	      main%sig = LagetXsec(vertex)		
