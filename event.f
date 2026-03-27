@@ -1444,6 +1444,14 @@ c
 ! COMPLETE_ev.
 !-----------------------------------------------------------------------
 
+! Deuterium model selection
+	if (doing_deuterium) then
+		Laget = theory_par%model .eq. 'LAGET_DEUT'
+		MSParis = theory_par%model .eq. 'MS_Paris'
+		MSV18 = theory_par%model .eq. 'MS_V18'
+		MSCDBonn = theory_par%model .eq. 'MS_CD-Bonn'
+		!print*, 'MSParis, MSV18, MSCDBonn', MSParis, MSV18, MSCDBonn
+	endif
 
 ! Initialize success code
 
@@ -1467,7 +1475,7 @@ c
 	   ! SF_weight can always be calculated. In that way one needs only 
            ! to do one calculation to get PS and PWIA (SIMC version) from 
            ! non rad. calculation using other cross section models that include FSI e.g. Laget 
-	   ! if (theory_par%model .eq. 'LAGET_DEUT') then
+	   ! if (Laget) then
 	   !   main%SF_weight = 1.0
 	   ! else
 	   ! calculate for vertex kinematics
@@ -1484,7 +1492,9 @@ c
 ! ... use linear interpolation to determine rho(pm)
 
 		 r = (Pm_val-Pm_theory(i)%min)/Pm_theory(i)%bin
-		 if (r.ge.0 .and. r.le.Pm_theory(i)%n) then
+		 if (doing_deuterium) then
+		 	weight = 1.0
+		 elseif (r.ge.0 .and. r.le.Pm_theory(i)%n) then
 		    iPm1 = nint(r)
 		    if (iPm1.eq.0) iPm1 = 1
 		    if (iPm1.eq.Pm_theory(i)%n) iPm1 = Pm_theory(i)%n-1
@@ -1533,12 +1543,6 @@ c
 	  main%sigcc_recon = sigep(recon)
 
 	elseif (doing_deuterium.or.doing_heavy) then
-		Laget = theory_par%model .eq. 'LAGET_DEUT'
-		MSParis = theory_par%model .eq. 'MS_Paris'
-		MSV18 = theory_par%model .eq. 'MS_V18'
-		MSCDBonn = theory_par%model .eq. 'MS_CD-Bonn'
-		!print*, 'MSParis, MSV18, MSCDBonn', MSParis, MSV18, MSCDBonn
-
 	   if (Laget) then
 	      main%sig = LagetXsec(vertex)		
 	      main%sig_recon = LagetXsec(recon)		
@@ -1621,7 +1625,7 @@ C If using Coulomb corrections, include focusing factor
 ! The total contributing weight from this event -- this weight is
 ! proportional to # experimental counts represented by the event.
 ! Apply survival probability to kaons if we're not modeling decay.
-	if (theory_par%model .eq. 'LAGET_DEUT') then
+	if (Laget .or. MSParis .or. MSV18 .or. MSCDBonn) then
 ! for the Laget Model the Jacobian has already been included	
 ! include the correction factors to the jacobian that is already included in the cross section     
 	   main%weight = main%sig*main%gen_weight*main%jacobian_corr*main%coul_corr
