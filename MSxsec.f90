@@ -76,7 +76,7 @@ function MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq) result (sigma_eep)
        v_l, v_t, v_lt, v_tt, s_fact)                                     ! output
   
   ! convert nb to ub for SIMC
-  sigma_eep = sigma_eep/1000.
+  sigma_eep = sigma_eep/1000000.
 
   !print*, 'sigma, vl, vt, vlt, vtt, s_fact = ', sigma, v_l, v_t, v_lt, v_tt, s_fact 
   
