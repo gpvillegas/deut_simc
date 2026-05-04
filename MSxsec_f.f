@@ -27,8 +27,8 @@
       sth2 = q2_loc/(4.*e_i*(e_i-nu))
       the = 2.*asin(sqrt(sth2))
 
-c      write(47, *) e_i, q2_loc, p_r_loc, theta_r_loc, phi_pq
-      write(47,*) the*rtd
+      ! write(47, *) e_i, q2_loc, p_r_loc, theta_r_loc*rtd, phi_pq*rtd
+      ! write(47,*) the*rtd
       
       MSxsec_f = MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq)
 

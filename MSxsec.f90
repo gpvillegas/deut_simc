@@ -30,6 +30,8 @@ function MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq) result (sigma_eep)
   ! assign variables to the event variable
   phi_r = pi - phi_pq
 
+  ! write(48, *) phi_r
+
   dtr = pi/180.
   
   !print*, ' Enter  p_r, q2, theta_r :'
@@ -72,6 +74,9 @@ function MSxsec(p_r_loc,q2_loc,theta_r_loc,e_i,the,phi_pq) result (sigma_eep)
   
   sigma_eep = resp_calc_sigma(e_i, e_f, the, p_r_loc, phi_r, &  ! input
        v_l, v_t, v_lt, v_tt, s_fact)                                     ! output
+  
+  ! convert nb to ub for SIMC
+  sigma_eep = sigma_eep/1000.
 
   !print*, 'sigma, vl, vt, vlt, vtt, s_fact = ', sigma, v_l, v_t, v_lt, v_tt, s_fact 
   
